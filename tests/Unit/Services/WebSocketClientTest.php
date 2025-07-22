@@ -1,10 +1,10 @@
 <?php
 // tests/Unit/Services/WebSocketClientTest.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Tests\Unit\Services;
+namespace Happones\LaravelEvolutionClient\Tests\Unit\Services;
 
 use PHPUnit\Framework\TestCase;
-use SamuelTerra22\LaravelEvolutionClient\Services\WebSocketClient;
+use Happones\LaravelEvolutionClient\Services\WebSocketClient;
 
 class WebSocketClientTest extends TestCase
 {

@@ -1,10 +1,10 @@
 <?php
 // src/Resources/Chat.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Resources;
+namespace Happones\LaravelEvolutionClient\Resources;
 
-use SamuelTerra22\LaravelEvolutionClient\Exceptions\EvolutionApiException;
-use SamuelTerra22\LaravelEvolutionClient\Services\EvolutionService;
+use Happones\LaravelEvolutionClient\Exceptions\EvolutionApiException;
+use Happones\LaravelEvolutionClient\Services\EvolutionService;
 
 class Chat
 {

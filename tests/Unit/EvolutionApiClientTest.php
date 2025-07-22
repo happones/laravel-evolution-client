@@ -1,15 +1,15 @@
 <?php
 // tests/Unit/EvolutionApiClientTest.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Tests\Unit;
+namespace Happones\LaravelEvolutionClient\Tests\Unit;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use SamuelTerra22\LaravelEvolutionClient\EvolutionApiClient;
-use SamuelTerra22\LaravelEvolutionClient\Services\EvolutionService;
-use SamuelTerra22\LaravelEvolutionClient\Tests\TestCase;
+use Happones\LaravelEvolutionClient\EvolutionApiClient;
+use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use Happones\LaravelEvolutionClient\Tests\TestCase;
 
 class EvolutionApiClientTest extends TestCase
 {
@@ -40,17 +40,17 @@ class EvolutionApiClientTest extends TestCase
     /** @test */
     public function it_provides_access_to_all_resources()
     {
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Chat', $this->client->chat);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Group', $this->client->group);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Message', $this->client->message);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Instance', $this->client->instance);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Call', $this->client->call);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Label', $this->client->label);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Profile', $this->client->profile);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\WebSocket', $this->client->websocket);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Proxy', $this->client->proxy);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Settings', $this->client->settings);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Template', $this->client->template);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Chat', $this->client->chat);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Group', $this->client->group);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Message', $this->client->message);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Instance', $this->client->instance);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Call', $this->client->call);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Label', $this->client->label);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Profile', $this->client->profile);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\WebSocket', $this->client->websocket);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Proxy', $this->client->proxy);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Settings', $this->client->settings);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Template', $this->client->template);
     }
 
     /** @test */

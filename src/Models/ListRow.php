@@ -1,7 +1,7 @@
 <?php
 // src/Models/ListRow.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Models;
+namespace Happones\LaravelEvolutionClient\Models;
 
 class ListRow
 {

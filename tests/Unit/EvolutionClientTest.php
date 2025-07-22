@@ -1,15 +1,15 @@
 <?php
 // tests/Unit/EvolutionClientTest.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Tests\Unit;
+namespace Happones\LaravelEvolutionClient\Tests\Unit;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use SamuelTerra22\LaravelEvolutionClient\EvolutionApiClient;
-use SamuelTerra22\LaravelEvolutionClient\Services\EvolutionService;
-use SamuelTerra22\LaravelEvolutionClient\Tests\TestCase;
+use Happones\LaravelEvolutionClient\EvolutionApiClient;
+use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use Happones\LaravelEvolutionClient\Tests\TestCase;
 
 class EvolutionClientTest extends TestCase
 {

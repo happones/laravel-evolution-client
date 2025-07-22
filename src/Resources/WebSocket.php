@@ -1,12 +1,12 @@
 <?php
 // src/Resources/WebSocket.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Resources;
+namespace Happones\LaravelEvolutionClient\Resources;
 
-use SamuelTerra22\LaravelEvolutionClient\Exceptions\EvolutionApiException;
-use SamuelTerra22\LaravelEvolutionClient\Models\WebSocket as WebSocketModel;
-use SamuelTerra22\LaravelEvolutionClient\Services\EvolutionService;
-use SamuelTerra22\LaravelEvolutionClient\Services\WebSocketClient;
+use Happones\LaravelEvolutionClient\Exceptions\EvolutionApiException;
+use Happones\LaravelEvolutionClient\Models\WebSocket as WebSocketModel;
+use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use Happones\LaravelEvolutionClient\Services\WebSocketClient;
 
 class WebSocket
 {

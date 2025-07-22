@@ -1,12 +1,12 @@
 <?php
 // tests/Feature/EvolutionServiceProviderTest.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Tests\Feature;
+namespace Happones\LaravelEvolutionClient\Tests\Feature;
 
 use Orchestra\Testbench\TestCase;
-use SamuelTerra22\LaravelEvolutionClient\EvolutionApiClient;
-use SamuelTerra22\LaravelEvolutionClient\EvolutionServiceProvider;
-use SamuelTerra22\LaravelEvolutionClient\Facades\Evolution;
+use Happones\LaravelEvolutionClient\EvolutionApiClient;
+use Happones\LaravelEvolutionClient\EvolutionServiceProvider;
+use Happones\LaravelEvolutionClient\Facades\Evolution;
 
 class EvolutionServiceProviderTest extends TestCase
 {
@@ -35,24 +35,24 @@ class EvolutionServiceProviderTest extends TestCase
     public function the_facade_provides_access_to_all_resources()
     {
         $client = app('evolution');
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Chat', $client->chat);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Group', $client->group);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Message', $client->message);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Instance', $client->instance);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Call', $client->call);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Label', $client->label);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Profile', $client->profile);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\WebSocket', $client->websocket);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Proxy', $client->proxy);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Settings', $client->settings);
-        $this->assertInstanceOf('SamuelTerra22\LaravelEvolutionClient\Resources\Template', $client->template);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Chat', $client->chat);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Group', $client->group);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Message', $client->message);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Instance', $client->instance);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Call', $client->call);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Label', $client->label);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Profile', $client->profile);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\WebSocket', $client->websocket);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Proxy', $client->proxy);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Settings', $client->settings);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Template', $client->template);
     }
 
     /** @test */
     public function it_publishes_the_config()
     {
         $this->artisan('vendor:publish', [
-            '--provider' => 'SamuelTerra22\LaravelEvolutionClient\EvolutionServiceProvider',
+            '--provider' => 'Happones\LaravelEvolutionClient\EvolutionServiceProvider',
             '--tag'      => 'evolution-config',
         ]);
 

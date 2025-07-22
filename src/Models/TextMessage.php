@@ -1,7 +1,7 @@
 <?php
 // src/Models/TextMessage.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Models;
+namespace Happones\LaravelEvolutionClient\Models;
 
 class TextMessage
 {

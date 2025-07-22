@@ -1,11 +1,11 @@
 <?php
 // tests/Unit/Resources/InstanceResourceTest.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Tests\Unit\Resources;
+namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
 use PHPUnit\Framework\TestCase;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Instance;
-use SamuelTerra22\LaravelEvolutionClient\Services\EvolutionService;
+use Happones\LaravelEvolutionClient\Resources\Instance;
+use Happones\LaravelEvolutionClient\Services\EvolutionService;
 
 class InstanceResourceTest extends TestCase
 {

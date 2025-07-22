@@ -1,12 +1,12 @@
 <?php
 // tests/Unit/Resources/WebSocketResourceTest.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Tests\Unit\Resources;
+namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
 use GuzzleHttp\Handler\MockHandler;
 use PHPUnit\Framework\TestCase;
-use SamuelTerra22\LaravelEvolutionClient\Resources\WebSocket;
-use SamuelTerra22\LaravelEvolutionClient\Services\EvolutionService;
+use Happones\LaravelEvolutionClient\Resources\WebSocket;
+use Happones\LaravelEvolutionClient\Services\EvolutionService;
 
 class WebSocketResourceTest extends TestCase
 {

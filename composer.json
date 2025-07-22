@@ -1,5 +1,5 @@
 {
-  "name": "samuelterra22/laravel-evolution-client",
+  "name": "happones/laravel-evolution-client",
   "description": "Laravel Client for Evolution API, allowing easy integration with WhatsApp.",
   "keywords": [
     "laravel",
@@ -8,24 +8,24 @@
     "evolution-api",
     "whatsapp"
   ],
-  "homepage": "https://github.com/samuelterra22/laravel-evolution-client",
+  "homepage": "https://github.com/happones/laravel-evolution-client",
   "support": {
-    "issues": "https://github.com/samuelterra22/laravel-evolution-client/issues",
-    "source": "https://github.com/samuelterra22/laravel-evolution-client"
+    "issues": "https://github.com/happones/laravel-evolution-client/issues",
+    "source": "https://github.com/happones/laravel-evolution-client"
   },
   "license": "MIT",
   "authors": [
     {
-      "name": "Samuel Terra",
-      "email": "samuelterra22@gmail.com",
+      "name": "Omar Hernandez",
+      "email": "happones@gmail.com",
       "role": "Developer"
     }
   ],
   "require": {
     "php": "^8.1|^8.2|^8.3|^8.4",
     "guzzlehttp/guzzle": "^7.5",
-    "illuminate/contracts": "^9.0|^10.0|^11.0",
-    "illuminate/support": "^9.0|^10.0|^11.0",
+    "illuminate/contracts": "^9.0|^10.0|^11.0|^12.0",
+    "illuminate/support": "^9.0|^10.0|^11.0|^12.0",
     "ratchet/pawl": "^0.4.1",
     "react/event-loop": "^1.3",
     "react/socket": "^1.12"
@@ -38,12 +38,12 @@
   },
   "autoload": {
     "psr-4": {
-      "SamuelTerra22\\LaravelEvolutionClient\\": "src"
+      "Happones\\LaravelEvolutionClient\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "SamuelTerra22\\LaravelEvolutionClient\\Tests\\": "tests"
+      "Happones\\LaravelEvolutionClient\\Tests\\": "tests"
     }
   },
   "scripts": {
@@ -62,10 +62,10 @@
   "extra": {
     "laravel": {
       "providers": [
-        "SamuelTerra22\\LaravelEvolutionClient\\EvolutionServiceProvider"
+        "Happones\\LaravelEvolutionClient\\EvolutionServiceProvider"
       ],
       "aliases": {
-        "Evolution": "SamuelTerra22\\LaravelEvolutionClient\\Facades\\Evolution"
+        "Evolution": "Happones\\LaravelEvolutionClient\\Facades\\Evolution"
       }
     }
   },

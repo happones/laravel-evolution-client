@@ -1,7 +1,7 @@
 <?php
 // tests/TestCase.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Tests;
+namespace Happones\LaravelEvolutionClient\Tests;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -9,9 +9,9 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Foundation\Application;
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use SamuelTerra22\LaravelEvolutionClient\EvolutionServiceProvider;
-use SamuelTerra22\LaravelEvolutionClient\Facades\Evolution;
-use SamuelTerra22\LaravelEvolutionClient\Services\EvolutionService;
+use Happones\LaravelEvolutionClient\EvolutionServiceProvider;
+use Happones\LaravelEvolutionClient\Facades\Evolution;
+use Happones\LaravelEvolutionClient\Services\EvolutionService;
 
 abstract class TestCase extends BaseTestCase
 {

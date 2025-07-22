@@ -1,9 +1,9 @@
 # Laravel Evolution Client
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/samuelterra22/laravel-evolution-client.svg?style=flat-square)](https://packagist.org/packages/samuelterra22/laravel-evolution-client)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/samuelterra22/laravel-evolution-client/run-tests?label=tests)](https://github.com/samuelterra22/laravel-evolution-client/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/samuelterra22/laravel-evolution-client/Check%20&%20fix%20styling?label=code%20style)](https://github.com/samuelterra22/laravel-evolution-client/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/samuelterra22/laravel-evolution-client.svg?style=flat-square)](https://packagist.org/packages/samuelterra22/laravel-evolution-client)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/happones/laravel-evolution-client.svg?style=flat-square)](https://packagist.org/packages/happones/laravel-evolution-client)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/happones/laravel-evolution-client/run-tests?label=tests)](https://github.com/happones/laravel-evolution-client/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/happones/laravel-evolution-client/Check%20&%20fix%20styling?label=code%20style)](https://github.com/happones/laravel-evolution-client/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/happones/laravel-evolution-client.svg?style=flat-square)](https://packagist.org/packages/happones/laravel-evolution-client)
 
 A Laravel client for the Evolution API, providing simple integration with WhatsApp for messaging, group management, and more.
 
@@ -21,7 +21,7 @@ A Laravel client for the Evolution API, providing simple integration with WhatsA
 You can install the package via composer:
 
 ```bash
-composer require samuelterra22/laravel-evolution-client
+composer require happones/laravel-evolution-client
 ```
 
 You can publish the configuration file with:
@@ -117,7 +117,7 @@ EVOLUTION_DEFAULT_INSTANCE=default
 ### Using the Facade
 
 ```php
-use SamuelTerra22\LaravelEvolutionClient\Facades\Evolution;
+use Happones\LaravelEvolutionClient\Facades\Evolution;
 
 // Check QR Code
 $qrCode = Evolution::getQrCode();
@@ -132,7 +132,7 @@ $result = Evolution::sendText('5511999999999', 'Hello, this is a test message!')
 ### Using Different Instances
 
 ```php
-use SamuelTerra22\LaravelEvolutionClient\Facades\Evolution;
+use Happones\LaravelEvolutionClient\Facades\Evolution;
 
 // Use a specific instance
 $result = Evolution::instance('my-instance')->sendText('5511999999999', 'Hello!');
@@ -141,7 +141,7 @@ $result = Evolution::instance('my-instance')->sendText('5511999999999', 'Hello!'
 ### Working with Chats
 
 ```php
-use SamuelTerra22\LaravelEvolutionClient\Facades\Evolution;
+use Happones\LaravelEvolutionClient\Facades\Evolution;
 
 // List all chats
 $chats = Evolution::chat->all();
@@ -159,7 +159,7 @@ Evolution::chat->markAsRead('5511999999999');
 ### Working with Groups
 
 ```php
-use SamuelTerra22\LaravelEvolutionClient\Facades\Evolution;
+use Happones\LaravelEvolutionClient\Facades\Evolution;
 
 // List all groups
 $groups = Evolution::group->all();
@@ -182,10 +182,10 @@ Evolution::group->promoteToAdmin($groupId, '5511999999999');
 ### Sending Different Types of Messages
 
 ```php
-use SamuelTerra22\LaravelEvolutionClient\Facades\Evolution;
-use SamuelTerra22\LaravelEvolutionClient\Models\Button;
-use SamuelTerra22\LaravelEvolutionClient\Models\ListRow;
-use SamuelTerra22\LaravelEvolutionClient\Models\ListSection;
+use Happones\LaravelEvolutionClient\Facades\Evolution;
+use Happones\LaravelEvolutionClient\Models\Button;
+use Happones\LaravelEvolutionClient\Models\ListRow;
+use Happones\LaravelEvolutionClient\Models\ListSection;
 
 // Send text
 Evolution::message->sendText('5511999999999', 'Hello, how are you?');
@@ -267,7 +267,7 @@ Evolution::message->sendStatus(
 ### Working with Labels
 
 ```php
-use SamuelTerra22\LaravelEvolutionClient\Facades\Evolution;
+use Happones\LaravelEvolutionClient\Facades\Evolution;
 
 // List all labels
 $labels = Evolution::label->findLabels();
@@ -282,7 +282,7 @@ Evolution::label->removeLabel('5511999999999', 'label_id_123');
 ### Working with Calls
 
 ```php
-use SamuelTerra22\LaravelEvolutionClient\Facades\Evolution;
+use Happones\LaravelEvolutionClient\Facades\Evolution;
 
 // Make a fake call
 Evolution::call->fakeCall('5511999999999', false, 45); // Voice call with 45 seconds
@@ -292,7 +292,7 @@ Evolution::call->fakeCall('5511999999999', true, 30);  // Video call with 30 sec
 ### Working with Profile
 
 ```php
-use SamuelTerra22\LaravelEvolutionClient\Facades\Evolution;
+use Happones\LaravelEvolutionClient\Facades\Evolution;
 
 // Fetch a contact's profile
 $profile = Evolution::profile->fetchProfile('5511999999999');
@@ -329,7 +329,7 @@ Evolution::profile->updatePrivacySettings(
 ### Working with WebSocket
 
 ```php
-use SamuelTerra22\LaravelEvolutionClient\Facades\Evolution;
+use Happones\LaravelEvolutionClient\Facades\Evolution;
 
 // Configure WebSocket
 Evolution::websocket->setWebSocket(true, [
@@ -467,11 +467,11 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Security
 
-If you discover any security-related issues, please email samuelterra22@gmail.com instead of using the issue tracker.
+If you discover any security-related issues, please email happones@gmail.com instead of using the issue tracker.
 
 ## Credits
 
-- [Samuel Terra](https://github.com/samuelterra22)
+- [Samuel Terra](https://github.com/happones)
 - [All Contributors](../../contributors)
 
 ## License

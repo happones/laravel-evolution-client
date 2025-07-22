@@ -1,20 +1,20 @@
 <?php
 // src/Resources/Message.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Resources;
+namespace Happones\LaravelEvolutionClient\Resources;
 
 use InvalidArgumentException;
-use SamuelTerra22\LaravelEvolutionClient\Exceptions\EvolutionApiException;
-use SamuelTerra22\LaravelEvolutionClient\Models\ButtonMessage;
-use SamuelTerra22\LaravelEvolutionClient\Models\Contact;
-use SamuelTerra22\LaravelEvolutionClient\Models\ContactMessage;
-use SamuelTerra22\LaravelEvolutionClient\Models\ListMessage;
-use SamuelTerra22\LaravelEvolutionClient\Models\PollMessage;
-use SamuelTerra22\LaravelEvolutionClient\Models\ReactionMessage;
-use SamuelTerra22\LaravelEvolutionClient\Models\StatusMessage;
-use SamuelTerra22\LaravelEvolutionClient\Models\TemplateMessage;
-use SamuelTerra22\LaravelEvolutionClient\Models\TextMessage;
-use SamuelTerra22\LaravelEvolutionClient\Services\EvolutionService;
+use Happones\LaravelEvolutionClient\Exceptions\EvolutionApiException;
+use Happones\LaravelEvolutionClient\Models\ButtonMessage;
+use Happones\LaravelEvolutionClient\Models\Contact;
+use Happones\LaravelEvolutionClient\Models\ContactMessage;
+use Happones\LaravelEvolutionClient\Models\ListMessage;
+use Happones\LaravelEvolutionClient\Models\PollMessage;
+use Happones\LaravelEvolutionClient\Models\ReactionMessage;
+use Happones\LaravelEvolutionClient\Models\StatusMessage;
+use Happones\LaravelEvolutionClient\Models\TemplateMessage;
+use Happones\LaravelEvolutionClient\Models\TextMessage;
+use Happones\LaravelEvolutionClient\Services\EvolutionService;
 
 class Message
 {

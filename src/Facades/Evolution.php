@@ -1,18 +1,18 @@
 <?php
 // src/Facades/Evolution.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Facades;
+namespace Happones\LaravelEvolutionClient\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use SamuelTerra22\LaravelEvolutionClient\EvolutionApiClient;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Call;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Chat;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Group;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Instance;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Label;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Message;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Profile;
-use SamuelTerra22\LaravelEvolutionClient\Resources\WebSocket;
+use Happones\LaravelEvolutionClient\EvolutionApiClient;
+use Happones\LaravelEvolutionClient\Resources\Call;
+use Happones\LaravelEvolutionClient\Resources\Chat;
+use Happones\LaravelEvolutionClient\Resources\Group;
+use Happones\LaravelEvolutionClient\Resources\Instance;
+use Happones\LaravelEvolutionClient\Resources\Label;
+use Happones\LaravelEvolutionClient\Resources\Message;
+use Happones\LaravelEvolutionClient\Resources\Profile;
+use Happones\LaravelEvolutionClient\Resources\WebSocket;
 
 /**
  * @method static EvolutionApiClient instance(string $instanceName)

@@ -1,21 +1,21 @@
 <?php
 // tests/Unit/Models/MessageModelTest.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Tests\Unit\Models;
+namespace Happones\LaravelEvolutionClient\Tests\Unit\Models;
 
 use PHPUnit\Framework\TestCase;
-use SamuelTerra22\LaravelEvolutionClient\Models\Contact;
-use SamuelTerra22\LaravelEvolutionClient\Models\ContactMessage;
-use SamuelTerra22\LaravelEvolutionClient\Models\ListMessage;
-use SamuelTerra22\LaravelEvolutionClient\Models\ListRow;
-use SamuelTerra22\LaravelEvolutionClient\Models\ListSection;
-use SamuelTerra22\LaravelEvolutionClient\Models\LocationMessage;
-use SamuelTerra22\LaravelEvolutionClient\Models\PollMessage;
-use SamuelTerra22\LaravelEvolutionClient\Models\QuotedMessage;
-use SamuelTerra22\LaravelEvolutionClient\Models\ReactionMessage;
-use SamuelTerra22\LaravelEvolutionClient\Models\StatusMessage;
-use SamuelTerra22\LaravelEvolutionClient\Models\TemplateMessage;
-use SamuelTerra22\LaravelEvolutionClient\Models\TextMessage;
+use Happones\LaravelEvolutionClient\Models\Contact;
+use Happones\LaravelEvolutionClient\Models\ContactMessage;
+use Happones\LaravelEvolutionClient\Models\ListMessage;
+use Happones\LaravelEvolutionClient\Models\ListRow;
+use Happones\LaravelEvolutionClient\Models\ListSection;
+use Happones\LaravelEvolutionClient\Models\LocationMessage;
+use Happones\LaravelEvolutionClient\Models\PollMessage;
+use Happones\LaravelEvolutionClient\Models\QuotedMessage;
+use Happones\LaravelEvolutionClient\Models\ReactionMessage;
+use Happones\LaravelEvolutionClient\Models\StatusMessage;
+use Happones\LaravelEvolutionClient\Models\TemplateMessage;
+use Happones\LaravelEvolutionClient\Models\TextMessage;
 
 class MessageModelTest extends TestCase
 {

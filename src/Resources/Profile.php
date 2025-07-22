@@ -1,15 +1,15 @@
 <?php
 // src/Resources/Profile.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Resources;
+namespace Happones\LaravelEvolutionClient\Resources;
 
-use SamuelTerra22\LaravelEvolutionClient\Exceptions\EvolutionApiException;
-use SamuelTerra22\LaravelEvolutionClient\Models\FetchProfile;
-use SamuelTerra22\LaravelEvolutionClient\Models\PrivacySettings;
-use SamuelTerra22\LaravelEvolutionClient\Models\ProfileName;
-use SamuelTerra22\LaravelEvolutionClient\Models\ProfilePicture;
-use SamuelTerra22\LaravelEvolutionClient\Models\ProfileStatus;
-use SamuelTerra22\LaravelEvolutionClient\Services\EvolutionService;
+use Happones\LaravelEvolutionClient\Exceptions\EvolutionApiException;
+use Happones\LaravelEvolutionClient\Models\FetchProfile;
+use Happones\LaravelEvolutionClient\Models\PrivacySettings;
+use Happones\LaravelEvolutionClient\Models\ProfileName;
+use Happones\LaravelEvolutionClient\Models\ProfilePicture;
+use Happones\LaravelEvolutionClient\Models\ProfileStatus;
+use Happones\LaravelEvolutionClient\Services\EvolutionService;
 
 class Profile
 {

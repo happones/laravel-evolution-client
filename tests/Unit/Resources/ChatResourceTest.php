@@ -1,11 +1,11 @@
 <?php
 // tests/Unit/Resources/ChatResourceTest.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Tests\Unit\Resources;
+namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
 use PHPUnit\Framework\TestCase;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Chat;
-use SamuelTerra22\LaravelEvolutionClient\Services\EvolutionService;
+use Happones\LaravelEvolutionClient\Resources\Chat;
+use Happones\LaravelEvolutionClient\Services\EvolutionService;
 
 class ChatResourceTest extends TestCase
 {

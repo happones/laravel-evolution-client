@@ -1,21 +1,21 @@
 <?php
 // src/EvolutionApiClient.php
 
-namespace SamuelTerra22\LaravelEvolutionClient;
+namespace Happones\LaravelEvolutionClient;
 
-use SamuelTerra22\LaravelEvolutionClient\Exceptions\EvolutionApiException;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Call;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Chat;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Group;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Instance;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Label;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Message;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Profile;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Proxy;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Settings;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Template;
-use SamuelTerra22\LaravelEvolutionClient\Resources\WebSocket;
-use SamuelTerra22\LaravelEvolutionClient\Services\EvolutionService;
+use Happones\LaravelEvolutionClient\Exceptions\EvolutionApiException;
+use Happones\LaravelEvolutionClient\Resources\Call;
+use Happones\LaravelEvolutionClient\Resources\Chat;
+use Happones\LaravelEvolutionClient\Resources\Group;
+use Happones\LaravelEvolutionClient\Resources\Instance;
+use Happones\LaravelEvolutionClient\Resources\Label;
+use Happones\LaravelEvolutionClient\Resources\Message;
+use Happones\LaravelEvolutionClient\Resources\Profile;
+use Happones\LaravelEvolutionClient\Resources\Proxy;
+use Happones\LaravelEvolutionClient\Resources\Settings;
+use Happones\LaravelEvolutionClient\Resources\Template;
+use Happones\LaravelEvolutionClient\Resources\WebSocket;
+use Happones\LaravelEvolutionClient\Services\EvolutionService;
 
 class EvolutionApiClient
 {

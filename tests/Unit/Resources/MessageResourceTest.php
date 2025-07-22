@@ -1,7 +1,7 @@
 <?php
 // tests/Unit/Resources/MessageResourceTest.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Tests\Unit\Resources;
+namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -9,11 +9,11 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use SamuelTerra22\LaravelEvolutionClient\Models\Button;
-use SamuelTerra22\LaravelEvolutionClient\Models\ListRow;
-use SamuelTerra22\LaravelEvolutionClient\Models\ListSection;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Message;
-use SamuelTerra22\LaravelEvolutionClient\Services\EvolutionService;
+use Happones\LaravelEvolutionClient\Models\Button;
+use Happones\LaravelEvolutionClient\Models\ListRow;
+use Happones\LaravelEvolutionClient\Models\ListSection;
+use Happones\LaravelEvolutionClient\Resources\Message;
+use Happones\LaravelEvolutionClient\Services\EvolutionService;
 
 class MessageResourceTest extends TestCase
 {

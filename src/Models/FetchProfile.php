@@ -1,6 +1,6 @@
 <?php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Models;
+namespace Happones\LaravelEvolutionClient\Models;
 
 class FetchProfile extends Profile
 {

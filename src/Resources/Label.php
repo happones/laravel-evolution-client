@@ -1,11 +1,11 @@
 <?php
 // src/Resources/Label.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Resources;
+namespace Happones\LaravelEvolutionClient\Resources;
 
-use SamuelTerra22\LaravelEvolutionClient\Exceptions\EvolutionApiException;
-use SamuelTerra22\LaravelEvolutionClient\Models\Label as LabelModel;
-use SamuelTerra22\LaravelEvolutionClient\Services\EvolutionService;
+use Happones\LaravelEvolutionClient\Exceptions\EvolutionApiException;
+use Happones\LaravelEvolutionClient\Models\Label as LabelModel;
+use Happones\LaravelEvolutionClient\Services\EvolutionService;
 
 class Label
 {

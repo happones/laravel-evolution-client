@@ -1,11 +1,11 @@
 <?php
 // tests/Unit/Resources/ProxyResourceTest.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Tests\Unit\Resources;
+namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
 use PHPUnit\Framework\TestCase;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Proxy;
-use SamuelTerra22\LaravelEvolutionClient\Services\EvolutionService;
+use Happones\LaravelEvolutionClient\Resources\Proxy;
+use Happones\LaravelEvolutionClient\Services\EvolutionService;
 
 class ProxyResourceTest extends TestCase
 {

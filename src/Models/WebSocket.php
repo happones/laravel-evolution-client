@@ -1,7 +1,7 @@
 <?php
 // src/Models/WebSocket.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Models;
+namespace Happones\LaravelEvolutionClient\Models;
 
 class WebSocket
 {

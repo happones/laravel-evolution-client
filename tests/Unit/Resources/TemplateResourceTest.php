@@ -1,11 +1,11 @@
 <?php
 // tests/Unit/Resources/TemplateResourceTest.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Tests\Unit\Resources;
+namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
 use PHPUnit\Framework\TestCase;
-use SamuelTerra22\LaravelEvolutionClient\Resources\Template;
-use SamuelTerra22\LaravelEvolutionClient\Services\EvolutionService;
+use Happones\LaravelEvolutionClient\Resources\Template;
+use Happones\LaravelEvolutionClient\Services\EvolutionService;
 
 class TemplateResourceTest extends TestCase
 {

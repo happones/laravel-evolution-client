@@ -1,11 +1,11 @@
 <?php
 // src/Services/EvolutionService.php
 
-namespace SamuelTerra22\LaravelEvolutionClient\Services;
+namespace Happones\LaravelEvolutionClient\Services;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use SamuelTerra22\LaravelEvolutionClient\Exceptions\EvolutionApiException;
+use Happones\LaravelEvolutionClient\Exceptions\EvolutionApiException;
 
 class EvolutionService
 {

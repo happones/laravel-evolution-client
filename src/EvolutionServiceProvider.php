@@ -1,10 +1,10 @@
 <?php
 // src/EvolutionServiceProvider.php
 
-namespace SamuelTerra22\LaravelEvolutionClient;
+namespace Happones\LaravelEvolutionClient;
 
 use Illuminate\Support\ServiceProvider;
-use SamuelTerra22\LaravelEvolutionClient\Services\EvolutionService;
+use Happones\LaravelEvolutionClient\Services\EvolutionService;
 
 class EvolutionServiceProvider extends ServiceProvider
 {
