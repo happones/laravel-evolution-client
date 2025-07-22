@@ -3,9 +3,9 @@
 
 namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
-use PHPUnit\Framework\TestCase;
 use Happones\LaravelEvolutionClient\Resources\Profile;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use PHPUnit\Framework\TestCase;
 
 class ProfileResourceTest extends TestCase
 {

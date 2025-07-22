@@ -3,9 +3,9 @@
 
 namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
-use PHPUnit\Framework\TestCase;
 use Happones\LaravelEvolutionClient\Resources\Settings;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use PHPUnit\Framework\TestCase;
 
 class SettingsResourceTest extends TestCase
 {

@@ -3,7 +3,6 @@
 
 namespace Happones\LaravelEvolutionClient\Tests\Unit\Models;
 
-use PHPUnit\Framework\TestCase;
 use Happones\LaravelEvolutionClient\Models\Contact;
 use Happones\LaravelEvolutionClient\Models\ContactMessage;
 use Happones\LaravelEvolutionClient\Models\ListMessage;
@@ -16,6 +15,7 @@ use Happones\LaravelEvolutionClient\Models\ReactionMessage;
 use Happones\LaravelEvolutionClient\Models\StatusMessage;
 use Happones\LaravelEvolutionClient\Models\TemplateMessage;
 use Happones\LaravelEvolutionClient\Models\TextMessage;
+use PHPUnit\Framework\TestCase;
 
 class MessageModelTest extends TestCase
 {

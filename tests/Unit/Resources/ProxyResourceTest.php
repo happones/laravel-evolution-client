@@ -3,9 +3,9 @@
 
 namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
-use PHPUnit\Framework\TestCase;
 use Happones\LaravelEvolutionClient\Resources\Proxy;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use PHPUnit\Framework\TestCase;
 
 class ProxyResourceTest extends TestCase
 {

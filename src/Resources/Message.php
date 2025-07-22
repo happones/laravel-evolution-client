@@ -3,7 +3,6 @@
 
 namespace Happones\LaravelEvolutionClient\Resources;
 
-use InvalidArgumentException;
 use Happones\LaravelEvolutionClient\Exceptions\EvolutionApiException;
 use Happones\LaravelEvolutionClient\Models\ButtonMessage;
 use Happones\LaravelEvolutionClient\Models\Contact;
@@ -15,6 +14,7 @@ use Happones\LaravelEvolutionClient\Models\StatusMessage;
 use Happones\LaravelEvolutionClient\Models\TemplateMessage;
 use Happones\LaravelEvolutionClient\Models\TextMessage;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use InvalidArgumentException;
 
 class Message
 {

@@ -3,8 +3,8 @@
 
 namespace Happones\LaravelEvolutionClient;
 
-use Illuminate\Support\ServiceProvider;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use Illuminate\Support\ServiceProvider;
 
 class EvolutionServiceProvider extends ServiceProvider
 {

@@ -3,8 +3,8 @@
 
 namespace Happones\LaravelEvolutionClient\Tests\Unit\Services;
 
-use PHPUnit\Framework\TestCase;
 use Happones\LaravelEvolutionClient\Services\WebSocketClient;
+use PHPUnit\Framework\TestCase;
 
 class WebSocketClientTest extends TestCase
 {

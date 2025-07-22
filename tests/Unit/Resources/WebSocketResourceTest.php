@@ -4,9 +4,9 @@
 namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
 use GuzzleHttp\Handler\MockHandler;
-use PHPUnit\Framework\TestCase;
 use Happones\LaravelEvolutionClient\Resources\WebSocket;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use PHPUnit\Framework\TestCase;
 
 class WebSocketResourceTest extends TestCase
 {

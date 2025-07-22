@@ -7,11 +7,11 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use Illuminate\Foundation\Application;
-use Orchestra\Testbench\TestCase as BaseTestCase;
 use Happones\LaravelEvolutionClient\EvolutionServiceProvider;
 use Happones\LaravelEvolutionClient\Facades\Evolution;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use Illuminate\Foundation\Application;
+use Orchestra\Testbench\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {

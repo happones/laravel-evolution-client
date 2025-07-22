@@ -3,7 +3,6 @@
 
 namespace Happones\LaravelEvolutionClient\Facades;
 
-use Illuminate\Support\Facades\Facade;
 use Happones\LaravelEvolutionClient\EvolutionApiClient;
 use Happones\LaravelEvolutionClient\Resources\Call;
 use Happones\LaravelEvolutionClient\Resources\Chat;
@@ -13,6 +12,7 @@ use Happones\LaravelEvolutionClient\Resources\Label;
 use Happones\LaravelEvolutionClient\Resources\Message;
 use Happones\LaravelEvolutionClient\Resources\Profile;
 use Happones\LaravelEvolutionClient\Resources\WebSocket;
+use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static EvolutionApiClient instance(string $instanceName)

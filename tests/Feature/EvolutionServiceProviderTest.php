@@ -3,10 +3,10 @@
 
 namespace Happones\LaravelEvolutionClient\Tests\Feature;
 
-use Orchestra\Testbench\TestCase;
 use Happones\LaravelEvolutionClient\EvolutionApiClient;
 use Happones\LaravelEvolutionClient\EvolutionServiceProvider;
 use Happones\LaravelEvolutionClient\Facades\Evolution;
+use Orchestra\Testbench\TestCase;
 
 class EvolutionServiceProviderTest extends TestCase
 {

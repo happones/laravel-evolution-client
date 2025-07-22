@@ -7,13 +7,13 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
 use Happones\LaravelEvolutionClient\Models\Button;
 use Happones\LaravelEvolutionClient\Models\ListRow;
 use Happones\LaravelEvolutionClient\Models\ListSection;
 use Happones\LaravelEvolutionClient\Resources\Message;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 
 class MessageResourceTest extends TestCase
 {
