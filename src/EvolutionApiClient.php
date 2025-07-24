@@ -6,6 +6,7 @@ namespace Happones\LaravelEvolutionClient;
 use Happones\LaravelEvolutionClient\Exceptions\EvolutionApiException;
 use Happones\LaravelEvolutionClient\Resources\Call;
 use Happones\LaravelEvolutionClient\Resources\Chat;
+use Happones\LaravelEvolutionClient\Resources\EvolutionBot;
 use Happones\LaravelEvolutionClient\Resources\Group;
 use Happones\LaravelEvolutionClient\Resources\Instance;
 use Happones\LaravelEvolutionClient\Resources\Label;
@@ -71,6 +72,10 @@ class EvolutionApiClient
      * @var Settings The Settings resource
      */
     public Settings $settings;
+    /**
+     * @var EvolutionBot The EvolutionBot resource
+     */
+    public EvolutionBot $evolutionBot;
 
     /**
      * Create a new EvolutionApiClient instance.
@@ -84,17 +89,18 @@ class EvolutionApiClient
         $this->instanceName = $instanceName;
 
         // Initialize resources
-        $this->chat      = new Chat($service, $instanceName);
-        $this->group     = new Group($service, $instanceName);
-        $this->message   = new Message($service, $instanceName);
-        $this->instance  = new Instance($service, $instanceName);
-        $this->call      = new Call($service, $instanceName);
-        $this->label     = new Label($service, $instanceName);
-        $this->profile   = new Profile($service, $instanceName);
-        $this->websocket = new WebSocket($service, $instanceName);
-        $this->template  = new Template($service, $instanceName);
-        $this->proxy     = new Proxy($service, $instanceName);
-        $this->settings  = new Settings($service, $instanceName);
+        $this->chat          = new Chat($service, $instanceName);
+        $this->group         = new Group($service, $instanceName);
+        $this->message       = new Message($service, $instanceName);
+        $this->instance      = new Instance($service, $instanceName);
+        $this->call          = new Call($service, $instanceName);
+        $this->label         = new Label($service, $instanceName);
+        $this->profile       = new Profile($service, $instanceName);
+        $this->websocket     = new WebSocket($service, $instanceName);
+        $this->template      = new Template($service, $instanceName);
+        $this->proxy         = new Proxy($service, $instanceName);
+        $this->settings      = new Settings($service, $instanceName);
+        $this->evolutionBot  = new EvolutionBot($service, $instanceName);
     }
 
     /**
@@ -120,8 +126,25 @@ class EvolutionApiClient
         $this->template->setInstanceName($instanceName);
         $this->proxy->setInstanceName($instanceName);
         $this->settings->setInstanceName($instanceName);
+        $this->evolutionBot->setInstanceName($instanceName);
 
         return $this;
+    }
+
+    /**
+     * Get the QR code for the instance.
+     *
+     * @param string $name
+     *
+     * @throws EvolutionApiException
+     *
+     * @return array
+     */
+    public function createInstance(string $name): array
+    {
+        $this->instance->setInstanceName($name);
+
+        return $this->instance->createInstance($name);
     }
 
     /**

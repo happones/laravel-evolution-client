@@ -436,6 +436,31 @@ Evolution::settings->set(
 $settings = Evolution::settings->find();
 ```
 
+Evolution Bot
+
+```php
+// Create evolution bot
+Evolution::evolutionBot->create(
+    enabled: true,
+    apiUrl: 'https://api.mybot.com/webhook',
+    apiKey: 'your-secret-api-key-for-the-bot',
+    triggerType: 'keyword',
+    triggerOperator: 'equals',
+    triggerValue: '!menu',
+    expire: 300,
+    keywordFinish: '!exit',
+    delayMessage: 1200,
+    unknownMessage: 'Sorry.',
+    listeningFromMe: false,
+    stopBotFromMe: true,
+    keepOpen: false,
+    debounceTime: 1000
+);
+
+// Delete evolution bot
+$settings = Evolution::evolutionBot->destroy($evolutionBotId);
+```
+
 Using Proxy
 ```php
 // Set proxy

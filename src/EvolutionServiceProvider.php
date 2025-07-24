@@ -13,7 +13,7 @@ class EvolutionServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         // Merge config
         $this->mergeConfigFrom(
@@ -39,7 +39,7 @@ class EvolutionServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         // Publish config
         $this->publishes([

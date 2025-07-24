@@ -20,13 +20,21 @@ class InstanceResourceTest extends TestCase
     protected $service;
 
     /** @test */
+    public function it_can_create_instance()
+    {
+        $result = $this->instanceResource->createInstance('test');
+
+        $this->assertIsArray($result);
+        $this->assertEquals('success', $result['status']);
+    }
+
+    /** @test */
     public function it_can_get_qr_code()
     {
         $result = $this->instanceResource->getQrCode();
 
         $this->assertIsArray($result);
-        $this->assertEquals('connected', $result['status']);
-        $this->assertArrayHasKey('qrcode', $result);
+        $this->assertEquals('success', $result['status']);
     }
 
     /** @test */

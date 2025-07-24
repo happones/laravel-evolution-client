@@ -3,6 +3,7 @@
 
 namespace Happones\LaravelEvolutionClient\Services;
 
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Happones\LaravelEvolutionClient\Exceptions\EvolutionApiException;
@@ -23,6 +24,11 @@ class EvolutionService
      * @var string The API key
      */
     protected string $apiKey;
+
+    /**
+     * @var string The integration engine
+     */
+    protected string $integration;
 
     /**
      * Create a new EvolutionService instance.

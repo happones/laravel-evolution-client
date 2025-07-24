@@ -6,6 +6,7 @@ namespace Happones\LaravelEvolutionClient\Facades;
 use Happones\LaravelEvolutionClient\EvolutionApiClient;
 use Happones\LaravelEvolutionClient\Resources\Call;
 use Happones\LaravelEvolutionClient\Resources\Chat;
+use Happones\LaravelEvolutionClient\Resources\EvolutionBot;
 use Happones\LaravelEvolutionClient\Resources\Group;
 use Happones\LaravelEvolutionClient\Resources\Instance;
 use Happones\LaravelEvolutionClient\Resources\Label;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static EvolutionApiClient instance(string $instanceName)
+ * @method static array createInstance(string $instanceName)
  * @method static array getQrCode()
  * @method static bool isConnected()
  * @method static array disconnect()
@@ -28,6 +30,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static Label getLabelAttribute()
  * @method static Profile getProfileAttribute()
  * @method static WebSocket getWebsocketAttribute()
+ * @method static EvolutionBot getEvolutionBotAttribute()
  *
  * @see EvolutionApiClient
  */
@@ -38,7 +41,7 @@ class Evolution extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'evolution';
     }

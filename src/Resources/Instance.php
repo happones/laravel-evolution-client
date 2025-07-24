@@ -53,6 +53,20 @@ class Instance
     }
 
     /**
+     * @param string $instanceName
+     *
+     * @throws EvolutionApiException
+     *
+     * @return array
+     */
+    public function createInstance(string $instanceName): array
+    {
+        return $this->service->post("/instance/create", [
+            'instanceName' => $instanceName,
+        ]);
+    }
+
+    /**
      * Get the QR code for the instance.
      *
      * @throws EvolutionApiException
@@ -61,7 +75,7 @@ class Instance
      */
     public function getQrCode(): array
     {
-        return $this->service->get("/instance/qrcode/{$this->instanceName}");
+        return $this->connect();
     }
 
     /**
