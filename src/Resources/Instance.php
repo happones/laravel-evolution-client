@@ -113,7 +113,7 @@ class Instance
      */
     public function connect(): array
     {
-        return $this->service->post("/instance/connect/{$this->instanceName}");
+        return $this->service->get("/instance/connect/{$this->instanceName}");
     }
 
     /**

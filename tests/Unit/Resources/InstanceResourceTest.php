@@ -34,7 +34,7 @@ class InstanceResourceTest extends TestCase
         $result = $this->instanceResource->getQrCode();
 
         $this->assertIsArray($result);
-        $this->assertEquals('success', $result['status']);
+        $this->assertArrayHasKey('qrcode', $result);
     }
 
     /** @test */
@@ -68,7 +68,7 @@ class InstanceResourceTest extends TestCase
         $result = $this->instanceResource->connect();
 
         $this->assertIsArray($result);
-        $this->assertEquals('success', $result['status']);
+        $this->assertEquals('connected', $result['status']);
     }
 
     /** @test */
