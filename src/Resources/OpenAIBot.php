@@ -56,15 +56,17 @@ class OpenAIBot
      *
      * @param string $botName
      * @param string $model
-     * @param array $options
-     * @return array
+     * @param array  $options
+     *
      * @throws EvolutionApiException
+     *
+     * @return array
      */
     public function create(string $botName, string $model, array $options = []): array
     {
         return $this->service->post('integrations/openai/bot', array_merge([
             'botName' => $botName,
-            'model' => $model,
+            'model'   => $model,
         ], $options));
     }
 
@@ -72,8 +74,10 @@ class OpenAIBot
      * Find a specific OpenAI bot by its ID.
      *
      * @param string $botId
-     * @return array
+     *
      * @throws EvolutionApiException
+     *
+     * @return array
      */
     public function find(string $botId): array
     {
@@ -83,8 +87,9 @@ class OpenAIBot
     /**
      * Get all OpenAI bots.
      *
-     * @return array
      * @throws EvolutionApiException
+     *
+     * @return array
      */
     public function findAll(): array
     {
@@ -95,9 +100,11 @@ class OpenAIBot
      * Update an existing OpenAI bot.
      *
      * @param string $botId
-     * @param array $data
-     * @return array
+     * @param array  $data
+     *
      * @throws EvolutionApiException
+     *
+     * @return array
      */
     public function update(string $botId, array $data): array
     {
@@ -108,8 +115,10 @@ class OpenAIBot
      * Delete an OpenAI bot.
      *
      * @param string $botId
-     * @return array
+     *
      * @throws EvolutionApiException
+     *
+     * @return array
      */
     public function delete(string $botId): array
     {
@@ -119,8 +128,9 @@ class OpenAIBot
     /**
      * Get OpenAI credentials.
      *
-     * @return array
      * @throws EvolutionApiException
+     *
+     * @return array
      */
     public function getCredentials(): array
     {
@@ -131,8 +141,10 @@ class OpenAIBot
      * Set OpenAI credentials.
      *
      * @param string $apiKey
-     * @return array
+     *
      * @throws EvolutionApiException
+     *
+     * @return array
      */
     public function setCredentials(string $apiKey): array
     {
@@ -142,8 +154,9 @@ class OpenAIBot
     /**
      * Delete OpenAI credentials.
      *
-     * @return array
      * @throws EvolutionApiException
+     *
+     * @return array
      */
     public function deleteCredentials(): array
     {
@@ -154,8 +167,10 @@ class OpenAIBot
      * Update OpenAI settings.
      *
      * @param array $settings
-     * @return array
+     *
      * @throws EvolutionApiException
+     *
+     * @return array
      */
     public function updateSettings(array $settings): array
     {
@@ -165,8 +180,9 @@ class OpenAIBot
     /**
      * Get OpenAI settings.
      *
-     * @return array
      * @throws EvolutionApiException
+     *
+     * @return array
      */
     public function getSettings(): array
     {
@@ -177,8 +193,10 @@ class OpenAIBot
      * Change the status of the OpenAI integration.
      *
      * @param bool $isActive
-     * @return array
+     *
      * @throws EvolutionApiException
+     *
+     * @return array
      */
     public function changeStatus(bool $isActive): array
     {
@@ -189,8 +207,10 @@ class OpenAIBot
      * Find the session for a specific bot.
      *
      * @param string $botId
-     * @return array
+     *
      * @throws EvolutionApiException
+     *
+     * @return array
      */
     public function findSession(string $botId): array
     {

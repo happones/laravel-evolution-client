@@ -72,7 +72,7 @@ class TemplateResourceTest extends TestCase
             [
                 'type' => 'BODY',
                 'text' => 'Updated hello {{1}}!',
-            ]
+            ],
         ]);
 
         $this->assertIsArray($result);

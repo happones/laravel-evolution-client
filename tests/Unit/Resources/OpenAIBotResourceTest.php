@@ -4,8 +4,8 @@ namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
 use Happones\LaravelEvolutionClient\Resources\OpenAIBot;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
-use Mockery;
 use Happones\LaravelEvolutionClient\Tests\TestCase;
+use Mockery;
 
 class OpenAIBotResourceTest extends TestCase
 {
@@ -16,7 +16,7 @@ class OpenAIBotResourceTest extends TestCase
     {
         parent::setUp();
         $this->mockService = Mockery::mock(EvolutionService::class);
-        $this->openAIBot = new OpenAIBot($this->mockService, 'default');
+        $this->openAIBot   = new OpenAIBot($this->mockService, 'default');
     }
 
     public function test_it_can_create_a_bot()
