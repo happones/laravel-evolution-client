@@ -110,6 +110,31 @@ class InstanceResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
+    /** @test */
+    public function it_can_get_webhook()
+    {
+        $result = $this->instanceResource->getWebhook();
+
+        $this->assertIsArray($result);
+    }
+
+    /** @test */
+    public function it_can_get_connection_state()
+    {
+        $result = $this->instanceResource->connectionState();
+
+        $this->assertIsArray($result);
+        $this->assertEquals('connected', $result['status']);
+    }
+
+    /** @test */
+    public function it_can_fetch_instances()
+    {
+        $result = $this->instanceResource->fetchInstances();
+
+        $this->assertIsArray($result);
+    }
+
     protected function setUp(): void
     {
         parent::setUp();

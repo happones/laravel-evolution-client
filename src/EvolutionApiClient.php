@@ -4,6 +4,7 @@
 namespace Happones\LaravelEvolutionClient;
 
 use Happones\LaravelEvolutionClient\Exceptions\EvolutionApiException;
+use Happones\LaravelEvolutionClient\Resources\Business;
 use Happones\LaravelEvolutionClient\Resources\Call;
 use Happones\LaravelEvolutionClient\Resources\Chat;
 use Happones\LaravelEvolutionClient\Resources\EvolutionBot;
@@ -12,6 +13,7 @@ use Happones\LaravelEvolutionClient\Resources\Instance;
 use Happones\LaravelEvolutionClient\Resources\Label;
 use Happones\LaravelEvolutionClient\Resources\Message;
 use Happones\LaravelEvolutionClient\Resources\Profile;
+use Happones\LaravelEvolutionClient\Resources\OpenAIBot;
 use Happones\LaravelEvolutionClient\Resources\Proxy;
 use Happones\LaravelEvolutionClient\Resources\Settings;
 use Happones\LaravelEvolutionClient\Resources\Template;
@@ -73,9 +75,17 @@ class EvolutionApiClient
      */
     public Settings $settings;
     /**
+     * @var OpenAIBot The OpenAIBot resource
+     */
+    public OpenAIBot $openAIBot;
+    /**
      * @var EvolutionBot The EvolutionBot resource
      */
     public EvolutionBot $evolutionBot;
+    /**
+     * @var Business The Business resource
+     */
+    public Business $business;
 
     /**
      * Create a new EvolutionApiClient instance.
@@ -100,7 +110,9 @@ class EvolutionApiClient
         $this->template      = new Template($service, $instanceName);
         $this->proxy         = new Proxy($service, $instanceName);
         $this->settings      = new Settings($service, $instanceName);
+        $this->openAIBot     = new OpenAIBot($service, $instanceName);
         $this->evolutionBot  = new EvolutionBot($service, $instanceName);
+        $this->business      = new Business($service, $instanceName);
     }
 
     /**
@@ -127,6 +139,8 @@ class EvolutionApiClient
         $this->proxy->setInstanceName($instanceName);
         $this->settings->setInstanceName($instanceName);
         $this->evolutionBot->setInstanceName($instanceName);
+        $this->openAIBot->setInstanceName($instanceName);
+        $this->business->setInstanceName($instanceName);
 
         return $this;
     }

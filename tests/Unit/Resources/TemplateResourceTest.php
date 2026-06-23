@@ -65,6 +65,29 @@ class TemplateResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
+    /** @test */
+    public function it_can_edit_template()
+    {
+        $result = $this->templateResource->edit('my_template', [
+            [
+                'type' => 'BODY',
+                'text' => 'Updated hello {{1}}!',
+            ]
+        ]);
+
+        $this->assertIsArray($result);
+        $this->assertEquals('success', $result['status']);
+    }
+
+    /** @test */
+    public function it_can_delete_template()
+    {
+        $result = $this->templateResource->delete('my_template');
+
+        $this->assertIsArray($result);
+        $this->assertEquals('success', $result['status']);
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -76,6 +99,11 @@ class TemplateResourceTest extends TestCase
         $this->service->method('post')->willReturn([
             'status'  => 'success',
             'message' => 'Template created successfully',
+        ]);
+
+        $this->service->method('delete')->willReturn([
+            'status'  => 'success',
+            'message' => 'Template deleted successfully',
         ]);
 
         $this->service->method('get')->willReturn([

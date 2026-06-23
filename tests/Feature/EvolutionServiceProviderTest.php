@@ -46,6 +46,9 @@ class EvolutionServiceProviderTest extends TestCase
         $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Proxy', $client->proxy);
         $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Settings', $client->settings);
         $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Template', $client->template);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\OpenAIBot', $client->openAIBot);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\EvolutionBot', $client->evolutionBot);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Business', $client->business);
     }
 
     /** @test */

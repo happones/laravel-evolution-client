@@ -51,6 +51,9 @@ class EvolutionApiClientTest extends TestCase
         $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Proxy', $this->client->proxy);
         $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Settings', $this->client->settings);
         $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Template', $this->client->template);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\OpenAIBot', $this->client->openAIBot);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\EvolutionBot', $this->client->evolutionBot);
+        $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Business', $this->client->business);
     }
 
     /** @test */
@@ -70,6 +73,9 @@ class EvolutionApiClientTest extends TestCase
         $this->assertEquals($instanceName, $this->client->proxy->getInstanceName());
         $this->assertEquals($instanceName, $this->client->settings->getInstanceName());
         $this->assertEquals($instanceName, $this->client->template->getInstanceName());
+        $this->assertEquals($instanceName, $this->client->openAIBot->getInstanceName());
+        $this->assertEquals($instanceName, $this->client->evolutionBot->getInstanceName());
+        $this->assertEquals($instanceName, $this->client->business->getInstanceName());
     }
 
     protected function setUp(): void

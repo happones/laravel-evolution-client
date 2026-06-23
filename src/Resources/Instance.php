@@ -157,16 +157,63 @@ class Instance
      *
      * @param string $url
      * @param array  $events
+     * @param bool   $enabled
+     * @param array  $headers
+     * @param bool   $base64
      *
      * @throws EvolutionApiException
      *
      * @return array
      */
-    public function setWebhook(string $url, array $events = []): array
-    {
-        return $this->service->post("/instance/webhook/{$this->instanceName}", [
-            'url'    => $url,
-            'events' => $events,
+    public function setWebhook(
+        string $url,
+        array $events = [],
+        bool $enabled = true,
+        array $headers = [],
+        bool $base64 = false
+    ): array {
+        return $this->service->post("/webhook/set/{$this->instanceName}", [
+            'enabled' => $enabled,
+            'url'     => $url,
+            'events'  => $events,
+            'headers' => $headers,
+            'base64'  => $base64,
         ]);
+    }
+
+    /**
+     * Get the webhook configuration for the instance.
+     *
+     * @throws EvolutionApiException
+     *
+     * @return array
+     */
+    public function getWebhook(): array
+    {
+        return $this->service->get("/webhook/find/{$this->instanceName}");
+    }
+
+    /**
+     * Get the connection state of the instance.
+     *
+     * @throws EvolutionApiException
+     *
+     * @return array
+     */
+    public function connectionState(): array
+    {
+        return $this->service->get("/instance/connectionState/{$this->instanceName}");
+    }
+
+    /**
+     * Fetch all instances.
+     *
+     * @throws EvolutionApiException
+     *
+     * @return array
+     */
+    public function fetchInstances(): array
+    {
+        return $this->service->get('/instance/fetchInstances');
     }
 }

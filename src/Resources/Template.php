@@ -100,4 +100,38 @@ class Template
     {
         return $this->service->get("/template/find/{$this->instanceName}");
     }
+
+    /**
+     * Edit an existing template.
+     *
+     * @param string $name
+     * @param array  $components
+     *
+     * @throws EvolutionApiException
+     *
+     * @return array
+     */
+    public function edit(string $name, array $components): array
+    {
+        return $this->service->post("/template/edit/{$this->instanceName}", [
+            'name'       => $name,
+            'components' => $components,
+        ]);
+    }
+
+    /**
+     * Delete a template.
+     *
+     * @param string $name
+     *
+     * @throws EvolutionApiException
+     *
+     * @return array
+     */
+    public function delete(string $name): array
+    {
+        return $this->service->delete("/template/delete/{$this->instanceName}", [
+            'name' => $name,
+        ]);
+    }
 }

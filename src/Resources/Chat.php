@@ -249,4 +249,62 @@ class Chat
             'presence' => 'paused',
         ]);
     }
+
+    /**
+     * Search and filter chats.
+     *
+     * @param array $query Where/take/skip/orderBy filters
+     *
+     * @throws EvolutionApiException
+     *
+     * @return array
+     */
+    public function findChats(array $query = []): array
+    {
+        return $this->service->post("/chat/findChats/{$this->instanceName}", $query);
+    }
+
+    /**
+     * Search and filter messages.
+     *
+     * @param array $query Where/take/skip/orderBy filters
+     *
+     * @throws EvolutionApiException
+     *
+     * @return array
+     */
+    public function findMessages(array $query = []): array
+    {
+        return $this->service->post("/chat/findMessages/{$this->instanceName}", $query);
+    }
+
+    /**
+     * Search and filter contacts.
+     *
+     * @param array $query Where/take/skip/orderBy filters
+     *
+     * @throws EvolutionApiException
+     *
+     * @return array
+     */
+    public function findContacts(array $query = []): array
+    {
+        return $this->service->post("/chat/findContacts/{$this->instanceName}", $query);
+    }
+
+    /**
+     * Check if numbers are on WhatsApp.
+     *
+     * @param array $numbers Array of phone numbers to verify
+     *
+     * @throws EvolutionApiException
+     *
+     * @return array
+     */
+    public function whatsappNumbers(array $numbers): array
+    {
+        return $this->service->post("/chat/whatsappNumbers/{$this->instanceName}", [
+            'numbers' => $numbers,
+        ]);
+    }
 }

@@ -4,6 +4,7 @@
 namespace Happones\LaravelEvolutionClient\Facades;
 
 use Happones\LaravelEvolutionClient\EvolutionApiClient;
+use Happones\LaravelEvolutionClient\Resources\Business;
 use Happones\LaravelEvolutionClient\Resources\Call;
 use Happones\LaravelEvolutionClient\Resources\Chat;
 use Happones\LaravelEvolutionClient\Resources\EvolutionBot;
@@ -11,7 +12,11 @@ use Happones\LaravelEvolutionClient\Resources\Group;
 use Happones\LaravelEvolutionClient\Resources\Instance;
 use Happones\LaravelEvolutionClient\Resources\Label;
 use Happones\LaravelEvolutionClient\Resources\Message;
+use Happones\LaravelEvolutionClient\Resources\OpenAIBot;
 use Happones\LaravelEvolutionClient\Resources\Profile;
+use Happones\LaravelEvolutionClient\Resources\Proxy;
+use Happones\LaravelEvolutionClient\Resources\Settings;
+use Happones\LaravelEvolutionClient\Resources\Template;
 use Happones\LaravelEvolutionClient\Resources\WebSocket;
 use Illuminate\Support\Facades\Facade;
 
@@ -31,6 +36,11 @@ use Illuminate\Support\Facades\Facade;
  * @method static Profile getProfileAttribute()
  * @method static WebSocket getWebsocketAttribute()
  * @method static EvolutionBot getEvolutionBotAttribute()
+ * @method static OpenAIBot getOpenAIBotAttribute()
+ * @method static Template getTemplateAttribute()
+ * @method static Proxy getProxyAttribute()
+ * @method static Settings getSettingsAttribute()
+ * @method static Business getBusinessAttribute()
  *
  * @see EvolutionApiClient
  */

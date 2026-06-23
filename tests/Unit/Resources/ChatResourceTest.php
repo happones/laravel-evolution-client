@@ -75,6 +75,42 @@ class ChatResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
+    /** @test */
+    public function it_can_find_chats()
+    {
+        $result = $this->chatResource->findChats(['where' => ['id' => 'foo']]);
+
+        $this->assertIsArray($result);
+        $this->assertEquals('success', $result['status']);
+    }
+
+    /** @test */
+    public function it_can_find_messages()
+    {
+        $result = $this->chatResource->findMessages(['where' => ['id' => 'foo']]);
+
+        $this->assertIsArray($result);
+        $this->assertEquals('success', $result['status']);
+    }
+
+    /** @test */
+    public function it_can_find_contacts()
+    {
+        $result = $this->chatResource->findContacts(['where' => ['id' => 'foo']]);
+
+        $this->assertIsArray($result);
+        $this->assertEquals('success', $result['status']);
+    }
+
+    /** @test */
+    public function it_can_verify_whatsapp_numbers()
+    {
+        $result = $this->chatResource->whatsappNumbers(['5511999999999']);
+
+        $this->assertIsArray($result);
+        $this->assertEquals('success', $result['status']);
+    }
+
     protected function setUp(): void
     {
         parent::setUp();

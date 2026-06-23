@@ -285,4 +285,44 @@ class Group
             'inviteCode' => $inviteCode,
         ]);
     }
+
+    /**
+     * Get group participants.
+     *
+     * @param string $groupJid
+     *
+     * @throws EvolutionApiException
+     *
+     * @return array
+     */
+    public function getParticipants(string $groupJid): array
+    {
+        return $this->service->get("/group/participants/{$this->instanceName}", [
+            'groupJid' => $groupJid,
+        ]);
+    }
+
+    /**
+     * Update participant in a group (add, remove, promote, demote).
+     *
+     * @param string $groupJid
+     * @param string $action       Enum: 'add', 'remove', 'promote', 'demote'
+     * @param array  $participants Array of phone numbers/JIDs
+     *
+     * @throws EvolutionApiException
+     *
+     * @return array
+     */
+    public function updateParticipant(string $groupJid, string $action, array $participants): array
+    {
+        $formattedParticipants = array_map(function ($number) {
+            return $this->formatPhoneNumber($number);
+        }, $participants);
+
+        return $this->service->post("/group/updateParticipant/{$this->instanceName}", [
+            'groupJid'     => $groupJid,
+            'action'       => $action,
+            'participants' => $formattedParticipants,
+        ]);
+    }
 }

@@ -108,6 +108,24 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
+    /** @test */
+    public function it_can_get_participants()
+    {
+        $result = $this->groupResource->getParticipants('123456789@g.us');
+
+        $this->assertIsArray($result);
+        $this->assertEquals('success', $result['status']);
+    }
+
+    /** @test */
+    public function it_can_update_participant()
+    {
+        $result = $this->groupResource->updateParticipant('123456789@g.us', 'add', ['5511999999999']);
+
+        $this->assertIsArray($result);
+        $this->assertEquals('success', $result['status']);
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
