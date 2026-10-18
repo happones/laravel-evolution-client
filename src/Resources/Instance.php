@@ -120,11 +120,37 @@ class Instance
     /**
      * Connect the instance.
      *
+     * Without a number the response carries the QR code ("code"/"base64"). With a
+     * number, Evolution also returns a "pairingCode" to link the device by phone.
+     *
+     * @param string|null $number Phone number with country code, to request a pairing code
+     *
      * @throws EvolutionApiException
      */
-    public function connect(): array
+    public function connect(?string $number = null): array
     {
-        return $this->service->get("/instance/connect/{$this->instanceName}");
+        $query = $number !== null ? ['number' => preg_replace('/\D/', '', $number)] : [];
+
+        return $this->service->get("/instance/connect/{$this->instanceName}", $query);
+    }
+
+    /**
+     * Get a pairing code to link the instance by phone number instead of QR.
+     *
+     * @param string $number Phone number with country code
+     *
+     * @throws EvolutionApiException
+     * @throws InvalidArgumentException
+     */
+    public function getPairingCode(string $number): ?string
+    {
+        if (preg_replace('/\D/', '', $number) === '') {
+            throw new InvalidArgumentException('Phone number is required');
+        }
+
+        $response = $this->connect($number);
+
+        return $response['pairingCode'] ?? null;
     }
 
     /**

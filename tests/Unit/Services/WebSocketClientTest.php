@@ -5,11 +5,12 @@
 namespace Happones\LaravelEvolutionClient\Tests\Unit\Services;
 
 use Happones\LaravelEvolutionClient\Services\WebSocketClient;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class WebSocketClientTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_can_be_instantiated()
     {
         // Create a simple class extending WebSocketClient for testing
@@ -30,7 +31,7 @@ class WebSocketClientTest extends TestCase
         $this->assertSame('api-token', $webSocketClient->apiToken);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_register_event_handlers()
     {
         // Create a simple class extending WebSocketClient for testing
@@ -64,7 +65,7 @@ class WebSocketClientTest extends TestCase
         $this->assertSame($eventHandler, $webSocketClient->handlers['message']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_register_multiple_event_handlers()
     {
         // Create a simple class extending WebSocketClient for testing

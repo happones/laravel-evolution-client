@@ -95,19 +95,19 @@ class Business
     }
 
     /**
-     * Format phone number to be used with the API.
+     * Format a phone number for the API.
+     *
+     * Evolution API v2 expects the bare number with country code (it builds the
+     * "@s.whatsapp.net" JID itself), so only digits are kept. Values that are
+     * already a JID (e.g. "...@g.us", "...@s.whatsapp.net", "...@lid") are
+     * passed through unchanged.
      */
     protected function formatPhoneNumber(string $phoneNumber): string
     {
-        // If it already looks like a formatted JID, return it as is
         if (str_contains($phoneNumber, '@')) {
             return $phoneNumber;
         }
 
-        // Remove any non-digit characters
-        $number = preg_replace('/\D/', '', $phoneNumber);
-
-        // Add @ to create a valid recipient id for the API
-        return $number . '@c.us';
+        return (string) preg_replace('/\D/', '', $phoneNumber);
     }
 }

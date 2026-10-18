@@ -98,66 +98,103 @@ class Message
     }
 
     /**
-     * Format phone number to be used with the API.
+     * Format a phone number for the API.
+     *
+     * Evolution API v2 expects the bare number with country code (it builds the
+     * "@s.whatsapp.net" JID itself), so only digits are kept. Values that are
+     * already a JID (e.g. "...@g.us", "...@s.whatsapp.net", "...@lid") are
+     * passed through unchanged.
      */
     protected function formatPhoneNumber(string $phoneNumber): string
     {
-        // Remove any non-digit characters
-        $number = preg_replace('/\D/', '', $phoneNumber);
+        if (str_contains($phoneNumber, '@')) {
+            return $phoneNumber;
+        }
 
-        // Add @ to create a valid recipient id for the API
-        return $number . '@c.us';
+        return (string) preg_replace('/\D/', '', $phoneNumber);
     }
 
     /**
      * Send an image message.
      *
+     * Shortcut for sendMedia() with mediatype "image".
+     *
+     * @param string $image URL or base64 image content
+     * @param string|null $mimetype MIME type; defaults to image/jpeg
+     * @param string|null $fileName File name; defaults to image.jpg
      *
      * @throws EvolutionApiException
      */
-    public function sendImage(string $phoneNumber, string $image, string $caption = '', bool $isGroup = false): array
-    {
-        $recipient = $isGroup
-            ? $phoneNumber . '@g.us'
-            : $this->formatPhoneNumber($phoneNumber);
-
-        return $this->service->post("/message/chat/send/image/{$this->instanceName}", [
-            'number' => $recipient,
-            'options' => [
-                'delay' => 1200,
-                'presence' => 'composing',
-            ],
-            'imageMessage' => [
-                'image' => $image,
-                'caption' => $caption,
-            ],
-        ]);
+    public function sendImage(
+        string $phoneNumber,
+        string $image,
+        string $caption = '',
+        bool $isGroup = false,
+        ?string $mimetype = null,
+        ?string $fileName = null,
+        int $delay = 0
+    ): array {
+        return $this->sendMedia(
+            $phoneNumber,
+            'image',
+            $mimetype ?? 'image/jpeg',
+            $caption,
+            $image,
+            $fileName ?? 'image.jpg',
+            $delay,
+            $isGroup
+        );
     }
 
     /**
      * Send a document message.
      *
+     * Shortcut for sendMedia() with mediatype "document".
+     *
+     * @param string $document URL or base64 document content
+     * @param string|null $mimetype MIME type; guessed from the file extension when null
      *
      * @throws EvolutionApiException
      */
-    public function sendDocument(string $phoneNumber, string $document, string $fileName, string $caption = '', bool $isGroup = false): array
-    {
-        $recipient = $isGroup
-            ? $phoneNumber . '@g.us'
-            : $this->formatPhoneNumber($phoneNumber);
+    public function sendDocument(
+        string $phoneNumber,
+        string $document,
+        string $fileName,
+        string $caption = '',
+        bool $isGroup = false,
+        ?string $mimetype = null,
+        int $delay = 0
+    ): array {
+        return $this->sendMedia(
+            $phoneNumber,
+            'document',
+            $mimetype ?? $this->guessDocumentMimetype($fileName),
+            $caption,
+            $document,
+            $fileName,
+            $delay,
+            $isGroup
+        );
+    }
 
-        return $this->service->post("/message/chat/send/document/{$this->instanceName}", [
-            'number' => $recipient,
-            'options' => [
-                'delay' => 1200,
-                'presence' => 'composing',
-            ],
-            'documentMessage' => [
-                'document' => $document,
-                'fileName' => $fileName,
-                'caption' => $caption,
-            ],
-        ]);
+    /**
+     * Guess a document MIME type from its file extension.
+     */
+    protected function guessDocumentMimetype(string $fileName): string
+    {
+        return match (strtolower(pathinfo($fileName, PATHINFO_EXTENSION))) {
+            'pdf' => 'application/pdf',
+            'doc' => 'application/msword',
+            'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'xls' => 'application/vnd.ms-excel',
+            'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'ppt' => 'application/vnd.ms-powerpoint',
+            'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+            'csv' => 'text/csv',
+            'txt' => 'text/plain',
+            'zip' => 'application/zip',
+            default => 'application/octet-stream',
+        };
     }
 
     /**

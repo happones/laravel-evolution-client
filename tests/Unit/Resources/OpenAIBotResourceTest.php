@@ -5,6 +5,7 @@ namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 use Happones\LaravelEvolutionClient\Resources\OpenAIBot;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
 use Happones\LaravelEvolutionClient\Tests\TestCase;
+use InvalidArgumentException;
 use Mockery;
 
 class OpenAIBotResourceTest extends TestCase
@@ -24,144 +25,148 @@ class OpenAIBotResourceTest extends TestCase
     {
         $this->mockService->shouldReceive('post')
             ->once()
-            ->with('integrations/openai/bot', ['botName' => 'test-bot', 'model' => 'gpt-4', 'prompt' => 'You are a helpful assistant.'])
-            ->andReturn(['success' => true]);
+            ->with('/openai/create/default', [
+                'enabled' => true,
+                'openaiCredsId' => 'creds-1',
+                'botType' => 'chatCompletion',
+                'model' => 'gpt-4o',
+                'triggerType' => 'all',
+            ])
+            ->andReturn(['id' => 'bot-123']);
 
-        $response = $this->openAIBot->create('test-bot', 'gpt-4', ['prompt' => 'You are a helpful assistant.']);
+        $response = $this->openAIBot->create('creds-1', 'gpt-4o', options: ['triggerType' => 'all']);
 
-        $this->assertEquals(['success' => true], $response);
+        $this->assertEquals(['id' => 'bot-123'], $response);
+    }
+
+    public function test_it_rejects_an_unknown_bot_type()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $this->openAIBot->create('creds-1', 'gpt-4o', 'unknown');
     }
 
     public function test_it_can_find_a_bot()
     {
         $this->mockService->shouldReceive('get')
             ->once()
-            ->with('integrations/openai/bot/bot-123')
-            ->andReturn(['id' => 'bot-123', 'name' => 'test-bot']);
+            ->with('/openai/find/bot-123/default')
+            ->andReturn(['id' => 'bot-123']);
 
-        $response = $this->openAIBot->find('bot-123');
-
-        $this->assertEquals(['id' => 'bot-123', 'name' => 'test-bot'], $response);
+        $this->assertEquals(['id' => 'bot-123'], $this->openAIBot->find('bot-123'));
     }
 
     public function test_it_can_find_all_bots()
     {
         $this->mockService->shouldReceive('get')
             ->once()
-            ->with('integrations/openai/bot')
+            ->with('/openai/find/default')
             ->andReturn([['id' => 'bot-123'], ['id' => 'bot-456']]);
 
-        $response = $this->openAIBot->findAll();
-
-        $this->assertEquals([['id' => 'bot-123'], ['id' => 'bot-456']], $response);
+        $this->assertEquals([['id' => 'bot-123'], ['id' => 'bot-456']], $this->openAIBot->findAll());
     }
 
     public function test_it_can_update_a_bot()
     {
         $this->mockService->shouldReceive('put')
             ->once()
-            ->with('integrations/openai/bot/bot-123', ['prompt' => 'New prompt'])
+            ->with('/openai/update/bot-123/default', ['model' => 'gpt-4o-mini'])
             ->andReturn(['success' => true]);
 
-        $response = $this->openAIBot->update('bot-123', ['prompt' => 'New prompt']);
-
-        $this->assertEquals(['success' => true], $response);
+        $this->assertEquals(['success' => true], $this->openAIBot->update('bot-123', ['model' => 'gpt-4o-mini']));
     }
 
     public function test_it_can_delete_a_bot()
     {
         $this->mockService->shouldReceive('delete')
             ->once()
-            ->with('integrations/openai/bot/bot-123')
+            ->with('/openai/delete/bot-123/default')
             ->andReturn(['success' => true]);
 
-        $response = $this->openAIBot->delete('bot-123');
-
-        $this->assertEquals(['success' => true], $response);
+        $this->assertEquals(['success' => true], $this->openAIBot->delete('bot-123'));
     }
 
     public function test_it_can_get_credentials()
     {
         $this->mockService->shouldReceive('get')
             ->once()
-            ->with('integrations/openai/credentials')
-            ->andReturn(['apiKey' => 'sk-123...']);
+            ->with('/openai/creds/default')
+            ->andReturn([['id' => 'creds-1']]);
 
-        $response = $this->openAIBot->getCredentials();
-
-        $this->assertEquals(['apiKey' => 'sk-123...'], $response);
+        $this->assertEquals([['id' => 'creds-1']], $this->openAIBot->getCredentials());
     }
 
     public function test_it_can_set_credentials()
     {
         $this->mockService->shouldReceive('post')
             ->once()
-            ->with('integrations/openai/credentials', ['apiKey' => 'sk-new-key'])
-            ->andReturn(['success' => true]);
+            ->with('/openai/creds/default', ['name' => 'main', 'apiKey' => 'sk-new-key'])
+            ->andReturn(['id' => 'creds-1']);
 
-        $response = $this->openAIBot->setCredentials('sk-new-key');
-
-        $this->assertEquals(['success' => true], $response);
+        $this->assertEquals(['id' => 'creds-1'], $this->openAIBot->setCredentials('main', 'sk-new-key'));
     }
 
     public function test_it_can_delete_credentials()
     {
         $this->mockService->shouldReceive('delete')
             ->once()
-            ->with('integrations/openai/credentials')
+            ->with('/openai/creds/creds-1/default')
             ->andReturn(['success' => true]);
 
-        $response = $this->openAIBot->deleteCredentials();
-
-        $this->assertEquals(['success' => true], $response);
+        $this->assertEquals(['success' => true], $this->openAIBot->deleteCredentials('creds-1'));
     }
 
     public function test_it_can_update_settings()
     {
         $this->mockService->shouldReceive('post')
             ->once()
-            ->with('integrations/openai/settings', ['temperature' => 0.8])
+            ->with('/openai/settings/default', ['expire' => 20])
             ->andReturn(['success' => true]);
 
-        $response = $this->openAIBot->updateSettings(['temperature' => 0.8]);
-
-        $this->assertEquals(['success' => true], $response);
+        $this->assertEquals(['success' => true], $this->openAIBot->updateSettings(['expire' => 20]));
     }
 
     public function test_it_can_get_settings()
     {
         $this->mockService->shouldReceive('get')
             ->once()
-            ->with('integrations/openai/settings')
-            ->andReturn(['temperature' => 0.7]);
+            ->with('/openai/fetchSettings/default')
+            ->andReturn(['expire' => 20]);
 
-        $response = $this->openAIBot->getSettings();
-
-        $this->assertEquals(['temperature' => 0.7], $response);
+        $this->assertEquals(['expire' => 20], $this->openAIBot->getSettings());
     }
 
     public function test_it_can_change_status()
     {
-        $this->mockService->shouldReceive('put')
+        $this->mockService->shouldReceive('post')
             ->once()
-            ->with('integrations/openai/status', ['isActive' => true])
+            ->with('/openai/changeStatus/default', [
+                'remoteJid' => '5511999999999@s.whatsapp.net',
+                'status' => 'paused',
+            ])
             ->andReturn(['success' => true]);
 
-        $response = $this->openAIBot->changeStatus(true);
+        $this->assertEquals(
+            ['success' => true],
+            $this->openAIBot->changeStatus('5511999999999@s.whatsapp.net', 'paused')
+        );
+    }
 
-        $this->assertEquals(['success' => true], $response);
+    public function test_it_rejects_an_unknown_session_status()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $this->openAIBot->changeStatus('5511999999999@s.whatsapp.net', 'active');
     }
 
     public function test_it_can_find_session()
     {
         $this->mockService->shouldReceive('get')
             ->once()
-            ->with('integrations/openai/session/bot-123')
-            ->andReturn(['session' => 'active']);
+            ->with('/openai/fetchSessions/bot-123/default')
+            ->andReturn([['id' => 'session-1']]);
 
-        $response = $this->openAIBot->findSession('bot-123');
-
-        $this->assertEquals(['session' => 'active'], $response);
+        $this->assertEquals([['id' => 'session-1']], $this->openAIBot->findSession('bot-123'));
     }
 
     protected function tearDown(): void

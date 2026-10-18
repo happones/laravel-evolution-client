@@ -11,6 +11,7 @@ use GuzzleHttp\Psr7\Response;
 use Happones\LaravelEvolutionClient\EvolutionApiClient;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
 use Happones\LaravelEvolutionClient\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class EvolutionApiClientTest extends TestCase
 {
@@ -24,21 +25,35 @@ class EvolutionApiClientTest extends TestCase
      */
     protected $client;
 
-    /** @test */
+    #[Test]
     public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(EvolutionApiClient::class, $this->client);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_set_instance_name()
     {
-        $this->client->instance('new-instance');
+        $client = $this->client->instance('new-instance');
 
-        $this->assertEquals('new-instance', $this->client->instance->getInstanceName());
+        $this->assertEquals('new-instance', $client->getInstanceName());
+        $this->assertEquals('new-instance', $client->instance->getInstanceName());
     }
 
-    /** @test */
+    #[Test]
+    public function it_does_not_mutate_the_shared_client_when_switching_instances()
+    {
+        $sales = $this->client->instance('sales');
+        $support = $this->client->instance('support');
+
+        $this->assertNotSame($this->client, $sales);
+        $this->assertEquals('test-instance', $this->client->getInstanceName());
+        $this->assertEquals('test-instance', $this->client->message->getInstanceName());
+        $this->assertEquals('sales', $sales->message->getInstanceName());
+        $this->assertEquals('support', $support->message->getInstanceName());
+    }
+
+    #[Test]
     public function it_provides_access_to_all_resources()
     {
         $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Chat', $this->client->chat);
@@ -57,26 +72,26 @@ class EvolutionApiClientTest extends TestCase
         $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Business', $this->client->business);
     }
 
-    /** @test */
+    #[Test]
     public function it_updates_instance_name_in_all_resources()
     {
         $instanceName = 'updated-instance';
-        $this->client->instance($instanceName);
+        $client = $this->client->instance($instanceName);
 
-        $this->assertEquals($instanceName, $this->client->chat->getInstanceName());
-        $this->assertEquals($instanceName, $this->client->group->getInstanceName());
-        $this->assertEquals($instanceName, $this->client->message->getInstanceName());
-        $this->assertEquals($instanceName, $this->client->instance->getInstanceName());
-        $this->assertEquals($instanceName, $this->client->call->getInstanceName());
-        $this->assertEquals($instanceName, $this->client->label->getInstanceName());
-        $this->assertEquals($instanceName, $this->client->profile->getInstanceName());
-        $this->assertEquals($instanceName, $this->client->websocket->getInstanceName());
-        $this->assertEquals($instanceName, $this->client->proxy->getInstanceName());
-        $this->assertEquals($instanceName, $this->client->settings->getInstanceName());
-        $this->assertEquals($instanceName, $this->client->template->getInstanceName());
-        $this->assertEquals($instanceName, $this->client->openAIBot->getInstanceName());
-        $this->assertEquals($instanceName, $this->client->evolutionBot->getInstanceName());
-        $this->assertEquals($instanceName, $this->client->business->getInstanceName());
+        $this->assertEquals($instanceName, $client->chat->getInstanceName());
+        $this->assertEquals($instanceName, $client->group->getInstanceName());
+        $this->assertEquals($instanceName, $client->message->getInstanceName());
+        $this->assertEquals($instanceName, $client->instance->getInstanceName());
+        $this->assertEquals($instanceName, $client->call->getInstanceName());
+        $this->assertEquals($instanceName, $client->label->getInstanceName());
+        $this->assertEquals($instanceName, $client->profile->getInstanceName());
+        $this->assertEquals($instanceName, $client->websocket->getInstanceName());
+        $this->assertEquals($instanceName, $client->proxy->getInstanceName());
+        $this->assertEquals($instanceName, $client->settings->getInstanceName());
+        $this->assertEquals($instanceName, $client->template->getInstanceName());
+        $this->assertEquals($instanceName, $client->openAIBot->getInstanceName());
+        $this->assertEquals($instanceName, $client->evolutionBot->getInstanceName());
+        $this->assertEquals($instanceName, $client->business->getInstanceName());
     }
 
     protected function setUp(): void

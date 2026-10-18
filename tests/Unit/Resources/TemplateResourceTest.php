@@ -6,6 +6,7 @@ namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
 use Happones\LaravelEvolutionClient\Resources\Template;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class TemplateResourceTest extends TestCase
@@ -20,7 +21,7 @@ class TemplateResourceTest extends TestCase
      */
     protected $service;
 
-    /** @test */
+    #[Test]
     public function it_can_create_template()
     {
         $result = $this->templateResource->create(
@@ -57,7 +58,7 @@ class TemplateResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_find_templates()
     {
         $result = $this->templateResource->find();
@@ -66,7 +67,7 @@ class TemplateResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_edit_template()
     {
         $result = $this->templateResource->edit('my_template', [
@@ -80,7 +81,7 @@ class TemplateResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_delete_template()
     {
         $result = $this->templateResource->delete('my_template');

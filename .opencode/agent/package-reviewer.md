@@ -1,5 +1,5 @@
 ---
-description: Review a pending change for conventions, correctness against the Evolution API spec, test coverage and PHP 8.3 / Laravel 13 compatibility. Reads and critiques; does not edit.
+description: Review a pending change for conventions, correctness against the Evolution API spec, test coverage and PHP 8.3 / Laravel 11–13 compatibility. Reads and critiques; does not edit.
 mode: subagent
 tools:
   read: true
@@ -22,7 +22,7 @@ Checklist:
   `GuzzleException`.
 - Style passes Pint; English only; no `declare(strict_types=1)` added.
 - Every new/changed public method has a mocked test; no real network calls.
-- PHP 8.3+ / Laravel 13; CHANGELOG + README updated when the public API changed.
+- PHP 8.3+ / Laravel 11–13; CHANGELOG + README updated when the public API changed.
 
 Verify, don't assume — run `vendor/bin/pest`, `composer analyse`, `vendor/bin/pint --test`
 and report real output. Findings most-severe first, with file:line and a fix.

@@ -6,6 +6,7 @@ namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
 use Happones\LaravelEvolutionClient\Resources\Profile;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class ProfileResourceTest extends TestCase
@@ -20,7 +21,7 @@ class ProfileResourceTest extends TestCase
      */
     protected $service;
 
-    /** @test */
+    #[Test]
     public function it_can_fetch_business_profile()
     {
         $result = $this->profileResource->fetchBusinessProfile('5511999999999');
@@ -29,7 +30,7 @@ class ProfileResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_fetch_profile()
     {
         $result = $this->profileResource->fetchProfile('5511999999999');
@@ -38,7 +39,7 @@ class ProfileResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_update_profile_name()
     {
         $result = $this->profileResource->updateProfileName('New Name');
@@ -47,7 +48,7 @@ class ProfileResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_update_profile_status()
     {
         $result = $this->profileResource->updateProfileStatus('Available');
@@ -56,7 +57,7 @@ class ProfileResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_update_profile_picture()
     {
         $result = $this->profileResource->updateProfilePicture('https://example.com/picture.jpg');
@@ -65,7 +66,7 @@ class ProfileResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_remove_profile_picture()
     {
         $result = $this->profileResource->removeProfilePicture();
@@ -74,7 +75,7 @@ class ProfileResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_fetch_privacy_settings()
     {
         $result = $this->profileResource->fetchPrivacySettings();
@@ -83,7 +84,7 @@ class ProfileResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_update_privacy_settings()
     {
         $result = $this->profileResource->updatePrivacySettings(

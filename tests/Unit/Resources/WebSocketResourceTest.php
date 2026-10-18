@@ -7,6 +7,7 @@ namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 use GuzzleHttp\Handler\MockHandler;
 use Happones\LaravelEvolutionClient\Resources\WebSocket;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class WebSocketResourceTest extends TestCase
@@ -26,7 +27,7 @@ class WebSocketResourceTest extends TestCase
      */
     protected $service;
 
-    /** @test */
+    #[Test]
     public function it_can_set_websocket_config()
     {
         $events = ['message', 'message.ack'];
@@ -36,7 +37,7 @@ class WebSocketResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_find_websocket_config()
     {
         $result = $this->webSocketResource->findWebSocket();
@@ -45,7 +46,7 @@ class WebSocketResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_websocket_client()
     {
         // Define PHPUNIT_RUNNING constant to make createClient return null for testing

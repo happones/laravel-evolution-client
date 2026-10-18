@@ -5,6 +5,7 @@
 namespace Happones\LaravelEvolutionClient;
 
 use Happones\LaravelEvolutionClient\Http\Controllers\WebhookController;
+use Happones\LaravelEvolutionClient\Http\Middleware\VerifyEvolutionWebhook;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
 use Happones\LaravelEvolutionClient\Webhook\WebhookProcessor;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -24,7 +25,8 @@ class EvolutionServiceProvider extends ServiceProvider
             'evolution'
         );
 
-        // Register the main class to use with the facade
+        // Register the main class to use with the facade. The client is stateless:
+        // instance() returns a new client, so sharing it across jobs/requests is safe.
         $this->app->singleton('evolution', function ($app) {
             return new EvolutionApiClient(
                 new EvolutionService(
@@ -55,7 +57,10 @@ class EvolutionServiceProvider extends ServiceProvider
 
         // Register the inbound webhook route when enabled
         if (config('evolution.webhook.route.enabled')) {
-            Route::middleware(config('evolution.webhook.route.middleware', ['api']))
+            Route::middleware([
+                ...(array) config('evolution.webhook.route.middleware', ['api']),
+                VerifyEvolutionWebhook::class,
+            ])
                 ->post(
                     config('evolution.webhook.route.path', 'evolution/webhook'),
                     WebhookController::class

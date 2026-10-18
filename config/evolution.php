@@ -91,6 +91,22 @@ return [
         ],
 
         /*
+        | Shared secret used to authenticate inbound webhooks. Evolution API does
+        | not sign its requests, so configure the same value as a custom header on
+        | the webhook, e.g.:
+        |
+        |   Evolution::instance('sales')->instance->setWebhook(
+        |       url: route('evolution.webhook'),
+        |       headers: ['X-Evolution-Secret' => config('evolution.webhook.secret')],
+        |   );
+        |
+        | Requests without the matching header are rejected with 401. Leave empty
+        | to disable the check (not recommended for public endpoints).
+        */
+        'secret' => env('EVOLUTION_WEBHOOK_SECRET', ''),
+        'secret_header' => env('EVOLUTION_WEBHOOK_SECRET_HEADER', 'X-Evolution-Secret'),
+
+        /*
         | When queue.enabled is true, the built-in webhook controller pushes a
         | ProcessEvolutionWebhook job instead of parsing/dispatching inline, so
         | the HTTP response returns immediately and Evolution stops retrying.

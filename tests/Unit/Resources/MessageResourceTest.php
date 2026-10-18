@@ -14,6 +14,7 @@ use Happones\LaravelEvolutionClient\Models\ListSection;
 use Happones\LaravelEvolutionClient\Resources\Message;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class MessageResourceTest extends TestCase
@@ -33,7 +34,7 @@ class MessageResourceTest extends TestCase
      */
     protected $service;
 
-    /** @test */
+    #[Test]
     public function it_can_send_text_message()
     {
         $result = $this->messageResource->sendText('5511999999999', 'Test message');
@@ -43,21 +44,60 @@ class MessageResourceTest extends TestCase
         $this->assertArrayHasKey('key', $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_validates_phone_number_when_sending_text()
     {
         $this->expectException(InvalidArgumentException::class);
         $this->messageResource->sendText('', 'Test message');
     }
 
-    /** @test */
+    #[Test]
     public function it_validates_message_text_when_sending_text()
     {
         $this->expectException(InvalidArgumentException::class);
         $this->messageResource->sendText('5511999999999', '');
     }
 
-    /** @test */
+    #[Test]
+    public function it_sends_images_through_the_v2_send_media_endpoint()
+    {
+        $service = $this->createMock(EvolutionService::class);
+        $service->expects($this->once())
+            ->method('post')
+            ->with('/message/sendMedia/test-instance', [
+                'number' => '5511999999999',
+                'mediatype' => 'image',
+                'mimetype' => 'image/jpeg',
+                'caption' => 'Look',
+                'media' => 'https://example.com/a.jpg',
+                'fileName' => 'image.jpg',
+            ])
+            ->willReturn(['status' => 'success']);
+
+        (new Message($service, 'test-instance'))->sendImage('5511999999999', 'https://example.com/a.jpg', 'Look');
+    }
+
+    #[Test]
+    public function it_sends_documents_through_the_v2_send_media_endpoint()
+    {
+        $service = $this->createMock(EvolutionService::class);
+        $service->expects($this->once())
+            ->method('post')
+            ->with('/message/sendMedia/test-instance', [
+                'number' => '120363000000000000@g.us',
+                'mediatype' => 'document',
+                'mimetype' => 'application/pdf',
+                'caption' => '',
+                'media' => 'https://example.com/invoice.pdf',
+                'fileName' => 'invoice.pdf',
+            ])
+            ->willReturn(['status' => 'success']);
+
+        (new Message($service, 'test-instance'))
+            ->sendDocument('120363000000000000', 'https://example.com/invoice.pdf', 'invoice.pdf', isGroup: true);
+    }
+
+    #[Test]
     public function it_formats_phone_number_correctly()
     {
         // Create a subclass that makes the protected method public for testing
@@ -69,14 +109,16 @@ class MessageResourceTest extends TestCase
             }
         };
 
-        // Test with regular number
-        $this->assertEquals('5511999999999@c.us', $messageResource->publicFormatPhoneNumber('5511999999999'));
+        // Evolution v2 expects the bare number; it builds the JID server-side
+        $this->assertEquals('5511999999999', $messageResource->publicFormatPhoneNumber('5511999999999'));
+        $this->assertEquals('5511999999999', $messageResource->publicFormatPhoneNumber('+55 (11) 99999-9999'));
 
-        // Test with formatted number
-        $this->assertEquals('5511999999999@c.us', $messageResource->publicFormatPhoneNumber('+55 (11) 99999-9999'));
+        // Existing JIDs are passed through unchanged
+        $this->assertEquals('5511999999999@s.whatsapp.net', $messageResource->publicFormatPhoneNumber('5511999999999@s.whatsapp.net'));
+        $this->assertEquals('123456789@lid', $messageResource->publicFormatPhoneNumber('123456789@lid'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_location_message()
     {
         $result = $this->messageResource->sendLocation(
@@ -91,7 +133,7 @@ class MessageResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_media_message()
     {
         $result = $this->messageResource->sendMedia(
@@ -107,7 +149,7 @@ class MessageResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_contact_message()
     {
         $result = $this->messageResource->sendContact(
@@ -120,7 +162,7 @@ class MessageResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_poll_message()
     {
         $result = $this->messageResource->sendPoll(
@@ -134,7 +176,7 @@ class MessageResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_list_message()
     {
         $rows1 = [
@@ -159,7 +201,7 @@ class MessageResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_buttons_message()
     {
         $buttons = [
@@ -179,7 +221,7 @@ class MessageResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_audio_message()
     {
         $result = $this->messageResource->sendAudio(
@@ -191,7 +233,7 @@ class MessageResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_sticker_message()
     {
         $result = $this->messageResource->sendSticker(
@@ -203,7 +245,7 @@ class MessageResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_template_message()
     {
         $result = $this->messageResource->sendTemplate(
@@ -236,7 +278,7 @@ class MessageResourceTest extends TestCase
                 'status' => 'success',
                 'key' => [
                     'id' => '123456',
-                    'remoteJid' => '5511999999999@c.us',
+                    'remoteJid' => '5511999999999@s.whatsapp.net',
                     'fromMe' => true,
                 ],
             ])),
@@ -253,7 +295,7 @@ class MessageResourceTest extends TestCase
             'status' => 'success',
             'key' => [
                 'id' => '123456',
-                'remoteJid' => '5511999999999@c.us',
+                'remoteJid' => '5511999999999@s.whatsapp.net',
                 'fromMe' => true,
             ],
         ]);

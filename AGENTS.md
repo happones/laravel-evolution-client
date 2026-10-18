@@ -18,7 +18,8 @@ a service provider, a publishable config, a facade, PSR-4 `src/`, and a fully
 mocked test suite.
 
 - **PHP:** `^8.3` (CI runs 8.3, 8.4, 8.5)
-- **Laravel:** `^13.0` (`illuminate/*`), tested via `orchestra/testbench ^11.0`
+- **Laravel:** `^11.0|^12.0|^13.0` (`illuminate/*`), tested via `orchestra/testbench ^9|^10|^11`
+  (CI matrix: L11→testbench 9, L12→10, L13→11; Pest `^3.8|^4.0`)
 - **Namespace:** `Happones\LaravelEvolutionClient\` → `src/`
 - **Tests namespace:** `Happones\LaravelEvolutionClient\Tests\` → `tests/`
 
@@ -52,8 +53,11 @@ Key rules of the design:
   to `EvolutionService::{get,post,put,delete}()`, which always returns `array`.
 - Every Resource takes `(EvolutionService $service, string $instanceName)` and exposes
   `getInstanceName()` / `setInstanceName()`.
-- `EvolutionApiClient::instance($name)` fans the instance name out to **every** Resource.
-  When you add a Resource you MUST register it in three places (see §4).
+- `EvolutionApiClient::instance($name)` returns a **new** client (it never mutates `$this`):
+  the container singleton is shared across queue jobs and Octane requests, so it must stay
+  stateless. When you add a Resource you MUST register it (see §4).
+- Phone numbers go to the API as bare digits (`formatPhoneNumber()`); values containing
+  `@` are passed through as JIDs. Never append `@c.us` (v1 / whatsapp-web.js convention).
 - **Models** are dumb payload builders (DTOs). They validate/shape data and usually
   expose `toArray()`. No HTTP, no framework coupling.
 - Errors from the API surface as `EvolutionApiException` — never leak `GuzzleException`.
@@ -85,11 +89,11 @@ Key rules of the design:
 4. Add PHPDoc (`@param`, `@throws EvolutionApiException`, `@return array`).
 5. Add a unit test in `tests/Unit/Resources/{Resource}ResourceTest.php`.
 
-**Adding a brand-new Resource** — register it in THREE places or `instance()` will break:
+**Adding a brand-new Resource** — register it in both places below:
 
 1. Create `src/Resources/Foo.php` following an existing Resource.
-2. In `src/EvolutionApiClient.php`: add the `public Foo $foo;` property, construct it in
-   `__construct()`, and add `$this->foo->setInstanceName($instanceName);` inside `instance()`.
+2. In `src/EvolutionApiClient.php`: add the `public Foo $foo;` property and construct it in
+   `__construct()` (`instance()` builds a new client, so nothing else is needed).
 3. In `src/Facades/Evolution.php`: add the `@method` PHPDoc line.
 4. Create `tests/Unit/Resources/FooResourceTest.php`.
 5. Update `README.md` (Usage) and `CHANGELOG.md` (Unreleased → Added).
@@ -101,7 +105,8 @@ Cross-check new endpoints, verbs, paths and required fields against the
 
 ## 5. Testing
 
-- Framework: **Pest 3** on top of PHPUnit, with **Orchestra Testbench**.
+- Framework: **Pest 3/4** on top of PHPUnit 11/12, with **Orchestra Testbench**. Mark
+  PHPUnit-style test methods with `#[Test]` — PHPUnit 12 ignores `/** @test */` docblocks.
 - HTTP is never hit for real: tests inject a Guzzle `MockHandler`. See
   `tests/TestCase.php` (`addMockResponse()`, `createMockService()`) and
   `tests/Unit/Resources/MessageResourceTest.php` for the canonical pattern.

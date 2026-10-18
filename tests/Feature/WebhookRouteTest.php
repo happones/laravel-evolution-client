@@ -7,6 +7,7 @@ use Happones\LaravelEvolutionClient\Jobs\ProcessEvolutionWebhook;
 use Happones\LaravelEvolutionClient\Tests\TestCase;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Event;
+use PHPUnit\Framework\Attributes\Test;
 
 class WebhookRouteTest extends TestCase
 {
@@ -19,7 +20,7 @@ class WebhookRouteTest extends TestCase
         $app['config']->set('evolution.webhook.route.middleware', []);
     }
 
-    /** @test */
+    #[Test]
     public function it_receives_a_webhook_and_dispatches_events_inline()
     {
         Event::fake([EvolutionWebhookReceived::class]);
@@ -42,7 +43,7 @@ class WebhookRouteTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_queues_processing_when_the_queue_is_enabled()
     {
         config()->set('evolution.webhook.queue.enabled', true);
@@ -56,5 +57,42 @@ class WebhookRouteTest extends TestCase
         $response->assertOk()->assertJson(['status' => 'queued']);
 
         Bus::assertDispatched(ProcessEvolutionWebhook::class);
+    }
+
+    #[Test]
+    public function it_rejects_payloads_without_an_event_name()
+    {
+        Event::fake([EvolutionWebhookReceived::class]);
+
+        $this->postJson('evolution/webhook', ['data' => []])->assertStatus(422);
+
+        Event::assertNotDispatched(EvolutionWebhookReceived::class);
+    }
+
+    #[Test]
+    public function it_rejects_requests_without_the_configured_secret()
+    {
+        config()->set('evolution.webhook.secret', 's3cret');
+        Event::fake([EvolutionWebhookReceived::class]);
+
+        $this->postJson('evolution/webhook', ['event' => 'messages.upsert'])->assertUnauthorized();
+        $this->postJson('evolution/webhook', ['event' => 'messages.upsert'], ['X-Evolution-Secret' => 'wrong'])
+            ->assertUnauthorized();
+
+        Event::assertNotDispatched(EvolutionWebhookReceived::class);
+    }
+
+    #[Test]
+    public function it_accepts_requests_with_the_configured_secret()
+    {
+        config()->set('evolution.webhook.secret', 's3cret');
+        config()->set('evolution.webhook.secret_header', 'X-Webhook-Token');
+        Event::fake([EvolutionWebhookReceived::class]);
+
+        $this->postJson('evolution/webhook', ['event' => 'messages.upsert'], ['X-Webhook-Token' => 's3cret'])
+            ->assertOk()
+            ->assertJson(['status' => 'received']);
+
+        Event::assertDispatched(EvolutionWebhookReceived::class);
     }
 }

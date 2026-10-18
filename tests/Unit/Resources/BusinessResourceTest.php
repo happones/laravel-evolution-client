@@ -6,6 +6,7 @@ namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
 use Happones\LaravelEvolutionClient\Resources\Business;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class BusinessResourceTest extends TestCase
@@ -31,14 +32,14 @@ class BusinessResourceTest extends TestCase
         $this->businessResource = new Business($this->service, 'test-instance');
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_catalog_without_optional_parameters()
     {
         $this->service->expects($this->once())
             ->method('post')
             ->with(
                 $this->equalTo('/business/getCatalog/test-instance'),
-                $this->equalTo(['number' => '5511999999999@c.us'])
+                $this->equalTo(['number' => '5511999999999'])
             )
             ->willReturn([
                 'status' => 'success',
@@ -51,7 +52,7 @@ class BusinessResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_catalog_with_optional_parameters()
     {
         $this->service->expects($this->once())
@@ -59,7 +60,7 @@ class BusinessResourceTest extends TestCase
             ->with(
                 $this->equalTo('/business/getCatalog/test-instance'),
                 $this->equalTo([
-                    'number' => '5511999999999@c.us',
+                    'number' => '5511999999999',
                     'limit' => 20,
                     'cursor' => 'next-cursor-token',
                 ])
@@ -75,14 +76,14 @@ class BusinessResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_collections_without_optional_parameters()
     {
         $this->service->expects($this->once())
             ->method('post')
             ->with(
                 $this->equalTo('/business/getCollections/test-instance'),
-                $this->equalTo(['number' => '5511999999999@c.us'])
+                $this->equalTo(['number' => '5511999999999'])
             )
             ->willReturn([
                 'status' => 'success',
@@ -95,7 +96,7 @@ class BusinessResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_collections_with_optional_parameters()
     {
         $this->service->expects($this->once())
@@ -103,7 +104,7 @@ class BusinessResourceTest extends TestCase
             ->with(
                 $this->equalTo('/business/getCollections/test-instance'),
                 $this->equalTo([
-                    'number' => '5511999999999@c.us',
+                    'number' => '5511999999999',
                     'limit' => 10,
                     'cursor' => 'some-cursor',
                 ])

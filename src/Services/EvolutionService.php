@@ -161,8 +161,14 @@ class EvolutionService
      *
      * @throws EvolutionApiException
      */
-    public function delete(string $endpoint, array $queryParams = []): array
+    public function delete(string $endpoint, array $queryParams = [], array $data = []): array
     {
-        return $this->request('DELETE', $endpoint, ['query' => $queryParams]);
+        $options = ['query' => $queryParams];
+
+        if ($data !== []) {
+            $options['json'] = $data;
+        }
+
+        return $this->request('DELETE', $endpoint, $options);
     }
 }

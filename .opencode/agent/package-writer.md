@@ -18,10 +18,10 @@ Rules:
   (returns `array`). Never call Guzzle directly from a Resource.
 - Validate input → `InvalidArgumentException`; let `EvolutionApiException` surface for API
   errors; never leak `GuzzleException`.
-- New Resource? Register it in all three places (client property + constructor +
-  `instance()`, and the facade `@method` PHPDoc). See `AGENTS.md` §4.
+- New Resource? Register it in the client (property + constructor) and the facade
+  `@method` PHPDoc. See `AGENTS.md` §4.
 - Match existing PHPDoc/style. English only. No `declare(strict_types=1)`.
-- PHP 8.3+ / Laravel 13.
+- PHP 8.3+ / Laravel 11–13.
 - Verify every verb/path/body against the Evolution API v2 OpenAPI spec.
 
 Before finishing, make green: `vendor/bin/pint`, `composer analyse`, `vendor/bin/pest`,

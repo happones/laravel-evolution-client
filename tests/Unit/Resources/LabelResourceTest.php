@@ -6,6 +6,7 @@ namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
 use Happones\LaravelEvolutionClient\Resources\Label;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class LabelResourceTest extends TestCase
@@ -20,7 +21,7 @@ class LabelResourceTest extends TestCase
      */
     protected $service;
 
-    /** @test */
+    #[Test]
     public function it_can_find_labels()
     {
         $result = $this->labelResource->findLabels();
@@ -30,7 +31,7 @@ class LabelResourceTest extends TestCase
         $this->assertArrayHasKey('labels', $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_add_label()
     {
         $result = $this->labelResource->addLabel('5511999999999', 'label-id-123');
@@ -39,7 +40,7 @@ class LabelResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_remove_label()
     {
         $result = $this->labelResource->removeLabel('5511999999999', 'label-id-123');
@@ -48,7 +49,7 @@ class LabelResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_handle_label()
     {
         $result = $this->labelResource->handleLabel('5511999999999', 'label-id-123', 'add');

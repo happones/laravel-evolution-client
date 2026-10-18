@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static EvolutionApiClient instance(string $instanceName)
+ * @method static string getInstanceName()
+ * @method static string|null getPairingCode(string $phoneNumber)
  * @method static array createInstance(string $instanceName)
  * @method static array getQrCode()
  * @method static bool isConnected()

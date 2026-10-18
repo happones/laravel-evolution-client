@@ -11,6 +11,7 @@ use GuzzleHttp\Psr7\Response;
 use Happones\LaravelEvolutionClient\EvolutionApiClient;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
 use Happones\LaravelEvolutionClient\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class EvolutionClientTest extends TestCase
 {
@@ -24,18 +25,32 @@ class EvolutionClientTest extends TestCase
      */
     protected $client;
 
-    /** @test */
+    #[Test]
     public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(EvolutionApiClient::class, $this->client);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_set_instance_name()
     {
-        $this->client->instance('new-instance');
+        $client = $this->client->instance('new-instance');
 
-        $this->assertEquals('new-instance', $this->client->instance->getInstanceName());
+        $this->assertEquals('new-instance', $client->getInstanceName());
+        $this->assertEquals('new-instance', $client->instance->getInstanceName());
+    }
+
+    #[Test]
+    public function it_does_not_mutate_the_shared_client_when_switching_instances()
+    {
+        $sales = $this->client->instance('sales');
+        $support = $this->client->instance('support');
+
+        $this->assertNotSame($this->client, $sales);
+        $this->assertEquals('default', $this->client->getInstanceName());
+        $this->assertEquals('default', $this->client->message->getInstanceName());
+        $this->assertEquals('sales', $sales->message->getInstanceName());
+        $this->assertEquals('support', $support->message->getInstanceName());
     }
 
     protected function setUp(): void

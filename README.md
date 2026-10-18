@@ -17,6 +17,12 @@ A Laravel client for the Evolution API, providing simple integration with WhatsA
 - Handle webhook events
 - Simple and clean Laravel integration
 
+## Requirements
+
+- PHP 8.3+
+- Laravel 11, 12 or 13
+- An [Evolution API v2](https://doc.evolution-api.com/) server
+
 ## Installation
 
 You can install the package via composer:
@@ -137,6 +143,34 @@ use Happones\LaravelEvolutionClient\Facades\Evolution;
 
 // Use a specific instance
 $result = Evolution::instance('my-instance')->sendText('5511999999999', 'Hello!');
+
+// Keep a client bound to one instance
+$sales = Evolution::instance('sales');
+$sales->message->sendText('5511999999999', 'Hi from sales');
+```
+
+`instance()` returns a **new** client bound to that instance and never mutates the shared
+container singleton, so it is safe in queue workers and Laravel Octane: one job or request
+can never inherit another's instance name. Always chain from `instance()` (or keep the
+returned client) instead of calling it for its side effect.
+
+Phone numbers are sent as bare digits with country code (e.g. `5511999999999`), as
+Evolution API v2 expects; any value that already contains `@` (`...@g.us`,
+`...@s.whatsapp.net`, `...@lid`) is passed through unchanged.
+
+### Linking a Device (QR or Pairing Code)
+
+```php
+use Happones\LaravelEvolutionClient\Facades\Evolution;
+
+// QR code
+$qr = Evolution::instance('sales')->getQrCode();
+
+// Pairing code: the user types it in WhatsApp > Linked devices > Link with phone number
+$code = Evolution::instance('sales')->getPairingCode('5215512345678'); // e.g. "WZYEH1YY"
+
+// Or create the instance already pointing at the owner's number
+Evolution::instance('sales')->instance->createInstance('sales', number: '5215512345678');
 ```
 
 ### Working with Chats
@@ -145,16 +179,19 @@ $result = Evolution::instance('my-instance')->sendText('5511999999999', 'Hello!'
 use Happones\LaravelEvolutionClient\Facades\Evolution;
 
 // List all chats
-$chats = Evolution::chat->all();
+$chats = Evolution::instance('my-instance')->chat->all();
 
 // Find a specific chat
-$chat = Evolution::chat->find('5511999999999');
+$chat = Evolution::instance('my-instance')->chat->find('5511999999999');
 
-// Get messages from a chat
-$messages = Evolution::chat->messages('5511999999999', 20);
+// Get messages from a chat (20 per page, page 1)
+$messages = Evolution::instance('my-instance')->chat->messages('5511999999999', 20, 1);
+
+// Delete a message for everyone
+Evolution::instance('my-instance')->chat->deleteMessageForEveryone($messageId, '5511999999999@s.whatsapp.net', fromMe: true);
 
 // Mark a chat as read
-Evolution::chat->markAsRead('5511999999999');
+Evolution::instance('my-instance')->chat->markAsRead('5511999999999');
 ```
 
 ### Working with Groups
@@ -163,21 +200,21 @@ Evolution::chat->markAsRead('5511999999999');
 use Happones\LaravelEvolutionClient\Facades\Evolution;
 
 // List all groups
-$groups = Evolution::group->all();
+$groups = Evolution::instance('my-instance')->group->all();
 
 // Create a new group
-$newGroup = Evolution::group->create('Group Name', [
+$newGroup = Evolution::instance('my-instance')->group->create('Group Name', [
     '5511999999999',
     '5511888888888',
 ]);
 
 // Add participants to a group
-Evolution::group->addParticipants($groupId, [
+Evolution::instance('my-instance')->group->addParticipants($groupId, [
     '5511777777777',
 ]);
 
 // Promote to admin
-Evolution::group->promoteToAdmin($groupId, '5511999999999');
+Evolution::instance('my-instance')->group->promoteToAdmin($groupId, '5511999999999');
 ```
 
 ### Sending Different Types of Messages
@@ -189,25 +226,25 @@ use Happones\LaravelEvolutionClient\Models\ListRow;
 use Happones\LaravelEvolutionClient\Models\ListSection;
 
 // Send text
-Evolution::message->sendText('5511999999999', 'Hello, how are you?');
+Evolution::instance('my-instance')->message->sendText('5511999999999', 'Hello, how are you?');
 
 // Send text with delay and link preview
-Evolution::message->sendText('5511999999999', 'Check out this website: https://example.com', false, 1000, true);
+Evolution::instance('my-instance')->message->sendText('5511999999999', 'Check out this website: https://example.com', false, 1000, true);
 
 // Send image
-Evolution::message->sendImage('5511999999999', 'https://example.com/image.jpg', 'Image caption');
+Evolution::instance('my-instance')->message->sendImage('5511999999999', 'https://example.com/image.jpg', 'Image caption');
 
 // Send document
-Evolution::message->sendDocument('5511999999999', 'https://example.com/document.pdf', 'filename.pdf', 'Check out this document');
+Evolution::instance('my-instance')->message->sendDocument('5511999999999', 'https://example.com/document.pdf', 'filename.pdf', 'Check out this document');
 
 // Send location
-Evolution::message->sendLocation('5511999999999', -23.5505, -46.6333, 'São Paulo', 'Paulista Avenue, 1000');
+Evolution::instance('my-instance')->message->sendLocation('5511999999999', -23.5505, -46.6333, 'São Paulo', 'Paulista Avenue, 1000');
 
 // Send contact
-Evolution::message->sendContact('5511999999999', 'Contact Name', '5511888888888');
+Evolution::instance('my-instance')->message->sendContact('5511999999999', 'Contact Name', '5511888888888');
 
 // Send poll
-Evolution::message->sendPoll('5511999999999', 'What is your favorite color?', 1, ['Blue', 'Green', 'Red', 'Yellow']);
+Evolution::instance('my-instance')->message->sendPoll('5511999999999', 'What is your favorite color?', 1, ['Blue', 'Green', 'Red', 'Yellow']);
 
 // Send list
 $rows1 = [
@@ -224,7 +261,7 @@ $sections = [
     new ListSection('Section 2', $rows2)
 ];
 
-Evolution::message->sendList(
+Evolution::instance('my-instance')->message->sendList(
     '5511999999999',
     'List Title',
     'Choose an option',
@@ -240,7 +277,7 @@ $buttons = [
     new Button('url', 'Visit Website', ['url' => 'https://example.com'])
 ];
 
-Evolution::message->sendButtons(
+Evolution::instance('my-instance')->message->sendButtons(
     '5511999999999',
     'Confirmation',
     'Do you want to proceed with the operation?',
@@ -249,13 +286,13 @@ Evolution::message->sendButtons(
 );
 
 // Send reaction to a message
-Evolution::message->sendReaction(
-    ['remoteJid' => '5511999999999@c.us', 'id' => 'ABCDEF123456', 'fromMe' => false],
+Evolution::instance('my-instance')->message->sendReaction(
+    ['remoteJid' => '5511999999999@s.whatsapp.net', 'id' => 'ABCDEF123456', 'fromMe' => false],
     '👍'
 );
 
 // Send status
-Evolution::message->sendStatus(
+Evolution::instance('my-instance')->message->sendStatus(
     'text',
     'Hello, this is my status!',
     null,
@@ -271,13 +308,13 @@ Evolution::message->sendStatus(
 use Happones\LaravelEvolutionClient\Facades\Evolution;
 
 // List all labels
-$labels = Evolution::label->findLabels();
+$labels = Evolution::instance('my-instance')->label->findLabels();
 
 // Add a label to a chat
-Evolution::label->addLabel('5511999999999', 'label_id_123');
+Evolution::instance('my-instance')->label->addLabel('5511999999999', 'label_id_123');
 
 // Remove a label from a chat
-Evolution::label->removeLabel('5511999999999', 'label_id_123');
+Evolution::instance('my-instance')->label->removeLabel('5511999999999', 'label_id_123');
 ```
 
 ### Working with Calls
@@ -286,8 +323,8 @@ Evolution::label->removeLabel('5511999999999', 'label_id_123');
 use Happones\LaravelEvolutionClient\Facades\Evolution;
 
 // Make a fake call
-Evolution::call->fakeCall('5511999999999', false, 45); // Voice call with 45 seconds
-Evolution::call->fakeCall('5511999999999', true, 30);  // Video call with 30 seconds
+Evolution::instance('my-instance')->call->fakeCall('5511999999999', false, 45); // Voice call with 45 seconds
+Evolution::instance('my-instance')->call->fakeCall('5511999999999', true, 30);  // Video call with 30 seconds
 ```
 
 ### Working with Profile
@@ -296,28 +333,28 @@ Evolution::call->fakeCall('5511999999999', true, 30);  // Video call with 30 sec
 use Happones\LaravelEvolutionClient\Facades\Evolution;
 
 // Fetch a contact's profile
-$profile = Evolution::profile->fetchProfile('5511999999999');
+$profile = Evolution::instance('my-instance')->profile->fetchProfile('5511999999999');
 
 // Fetch business profile
-$businessProfile = Evolution::profile->fetchBusinessProfile('5511999999999');
+$businessProfile = Evolution::instance('my-instance')->profile->fetchBusinessProfile('5511999999999');
 
 // Update profile name
-Evolution::profile->updateProfileName('My Name');
+Evolution::instance('my-instance')->profile->updateProfileName('My Name');
 
 // Update status
-Evolution::profile->updateProfileStatus('Available for service');
+Evolution::instance('my-instance')->profile->updateProfileStatus('Available for service');
 
 // Update profile picture
-Evolution::profile->updateProfilePicture('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQE...');
+Evolution::instance('my-instance')->profile->updateProfilePicture('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQE...');
 
 // Remove profile picture
-Evolution::profile->removeProfilePicture();
+Evolution::instance('my-instance')->profile->removeProfilePicture();
 
 // Fetch privacy settings
-$privacySettings = Evolution::profile->fetchPrivacySettings();
+$privacySettings = Evolution::instance('my-instance')->profile->fetchPrivacySettings();
 
 // Update privacy settings
-Evolution::profile->updatePrivacySettings(
+Evolution::instance('my-instance')->profile->updatePrivacySettings(
     'all',               // readreceipts
     'contacts',          // profile
     'contacts',          // status
@@ -333,17 +370,17 @@ Evolution::profile->updatePrivacySettings(
 use Happones\LaravelEvolutionClient\Facades\Evolution;
 
 // Configure WebSocket
-Evolution::websocket->setWebSocket(true, [
+Evolution::instance('my-instance')->websocket->setWebSocket(true, [
     'message',
     'message.ack',
     'status.instance'
 ]);
 
 // Fetch WebSocket configuration
-$webSocketConfig = Evolution::websocket->findWebSocket();
+$webSocketConfig = Evolution::instance('my-instance')->websocket->findWebSocket();
 
 // Create a WebSocket client
-$webSocketClient = Evolution::websocket->createClient();
+$webSocketClient = Evolution::instance('my-instance')->websocket->createClient();
 
 // Register handlers for events
 $webSocketClient->on('message', function ($data) {
@@ -367,7 +404,7 @@ Working with Templates
 
 ```php
 // Create a template
-$response = Evolution::template->create(
+$response = Evolution::instance('my-instance')->template->create(
     'my_template',
     'MARKETING',
     'en_US',
@@ -398,10 +435,10 @@ $response = Evolution::template->create(
 );
 
 // Find templates
-$templates = Evolution::template->find();
+$templates = Evolution::instance('my-instance')->template->find();
 
 // Send a template message
-Evolution::message->sendTemplate(
+Evolution::instance('my-instance')->message->sendTemplate(
     '5511999999999',
     'my_template',
     'en_US',
@@ -423,7 +460,7 @@ Managing Settings
 
 ```php
 // Set instance settings
-Evolution::settings->set(
+Evolution::instance('my-instance')->settings->set(
     true,  // reject calls
     'I cannot take calls right now', // call message
     false, // don't ignore groups
@@ -434,14 +471,14 @@ Evolution::settings->set(
 );
 
 // Get current settings
-$settings = Evolution::settings->find();
+$settings = Evolution::instance('my-instance')->settings->find();
 ```
 
 Evolution Bot
 
 ```php
 // Create evolution bot
-Evolution::evolutionBot->create(
+Evolution::instance('my-instance')->evolutionBot->create(
     enabled: true,
     apiUrl: 'https://api.mybot.com/webhook',
     apiKey: 'your-secret-api-key-for-the-bot',
@@ -459,13 +496,13 @@ Evolution::evolutionBot->create(
 );
 
 // Delete evolution bot
-$settings = Evolution::evolutionBot->destroy($evolutionBotId);
+$settings = Evolution::instance('my-instance')->evolutionBot->destroy($evolutionBotId);
 ```
 
 Using Proxy
 ```php
 // Set proxy
-Evolution::proxy->set(
+Evolution::instance('my-instance')->proxy->set(
     true,     // enabled
     '127.0.0.1', // host
     '8080',   // port
@@ -475,7 +512,7 @@ Evolution::proxy->set(
 );
 
 // Get current proxy settings
-$proxy = Evolution::proxy->find();
+$proxy = Evolution::instance('my-instance')->proxy->find();
 ```
 
 ### Handling Webhooks
@@ -498,6 +535,23 @@ exposes them for use.
 
 Point your instance webhook at `https://your-app.test/evolution/webhook`. (Or build your
 own controller and call `WebhookProcessor::process($request)` yourself.)
+
+**Secure the endpoint.** Evolution API does not sign webhooks, so the package checks a
+shared secret sent as a custom header. Set `EVOLUTION_WEBHOOK_SECRET` and register the same
+value as a header on the instance webhook:
+
+```php
+Evolution::instance('sales')->instance->setWebhook(
+    url: route('evolution.webhook'),
+    events: ['MESSAGES_UPSERT', 'CONNECTION_UPDATE'],
+    headers: ['X-Evolution-Secret' => config('evolution.webhook.secret')],
+);
+```
+
+Requests without the matching header (`EVOLUTION_WEBHOOK_SECRET_HEADER`, default
+`X-Evolution-Secret`) get `401`; payloads without an `event` get `422`. When the secret is
+empty the header check is skipped, so always set it on public endpoints. The check lives in
+the `VerifyEvolutionWebhook` middleware, which you can also attach to your own route.
 
 **2. Listen for events.** Every webhook dispatches `EvolutionWebhookReceived`, plus a
 named `evolution.webhook.{event}` event:

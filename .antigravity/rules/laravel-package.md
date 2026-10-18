@@ -7,7 +7,7 @@ this file is the short, always-on rule set.
 ## Project
 
 Spatie-style Laravel HTTP client for the **Evolution API v2** (WhatsApp).
-Namespace `Happones\LaravelEvolutionClient\` → `src/`. **PHP 8.3+ / Laravel 13.**
+Namespace `Happones\LaravelEvolutionClient\` → `src/`. **PHP 8.3+ / Laravel 11–13.**
 
 ## Always
 
@@ -15,8 +15,8 @@ Namespace `Happones\LaravelEvolutionClient\` → `src/`. **PHP 8.3+ / Laravel 13
   `EvolutionService::{get,post,put,delete}()` (returns `array`).
 - Validate input → throw `InvalidArgumentException`; let `EvolutionApiException` surface
   for API failures.
-- New Resource → register in all three places: client property + constructor +
-  `instance()`, and the `Evolution` facade `@method` PHPDoc. See `AGENTS.md` §4.
+- New Resource → register it in the client (property + constructor) and the `Evolution`
+  facade `@method` PHPDoc. See `AGENTS.md` §4.
 - Add a Pest test (mocked Guzzle, no network) for every new/changed public method.
 - Verify every verb/path/body against the Evolution API v2 OpenAPI spec.
 - Match existing PHPDoc/formatting; English only; no `declare(strict_types=1)`.

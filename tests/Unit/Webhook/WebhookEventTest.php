@@ -3,11 +3,12 @@
 namespace Happones\LaravelEvolutionClient\Tests\Unit\Webhook;
 
 use Happones\LaravelEvolutionClient\Webhook\WebhookEvent;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class WebhookEventTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_parses_a_raw_payload()
     {
         $event = WebhookEvent::fromArray([
@@ -28,7 +29,7 @@ class WebhookEventTest extends TestCase
         $this->assertTrue($event->isMessageUpsert());
     }
 
-    /** @test */
+    #[Test]
     public function it_normalizes_event_names_to_lowercase_dotted()
     {
         $this->assertSame('messages.upsert', WebhookEvent::normalizeEventName('MESSAGES_UPSERT'));
@@ -40,7 +41,7 @@ class WebhookEventTest extends TestCase
         $this->assertTrue($event->isConnectionUpdate());
     }
 
-    /** @test */
+    #[Test]
     public function it_defaults_missing_fields_gracefully()
     {
         $event = WebhookEvent::fromArray([]);
@@ -51,7 +52,7 @@ class WebhookEventTest extends TestCase
         $this->assertSame('fallback', $event->get('missing', 'fallback'));
     }
 
-    /** @test */
+    #[Test]
     public function it_exposes_the_raw_payload()
     {
         $payload = ['event' => 'call', 'data' => ['id' => 1]];

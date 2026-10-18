@@ -6,6 +6,7 @@ namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
 use Happones\LaravelEvolutionClient\Resources\Call;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class CallResourceTest extends TestCase
@@ -20,7 +21,7 @@ class CallResourceTest extends TestCase
      */
     protected $service;
 
-    /** @test */
+    #[Test]
     public function it_can_make_fake_voice_call()
     {
         $result = $this->callResource->fakeCall('5511999999999', false, 30);
@@ -29,7 +30,7 @@ class CallResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_make_fake_video_call()
     {
         $result = $this->callResource->fakeCall('5511999999999', true, 45);

@@ -16,11 +16,12 @@ use Happones\LaravelEvolutionClient\Models\ReactionMessage;
 use Happones\LaravelEvolutionClient\Models\StatusMessage;
 use Happones\LaravelEvolutionClient\Models\TemplateMessage;
 use Happones\LaravelEvolutionClient\Models\TextMessage;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class MessageModelTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_can_create_text_message()
     {
         $number = '5511999999999';
@@ -35,7 +36,7 @@ class MessageModelTest extends TestCase
         $this->assertEquals($delay, $data['delay']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_text_message_with_optional_parameters()
     {
         $number = '5511999999999';
@@ -43,7 +44,7 @@ class MessageModelTest extends TestCase
         $delay = 1000;
         $linkPreview = true;
         $mentionsEveryOne = true;
-        $mentioned = ['5511888888888@c.us'];
+        $mentioned = ['5511888888888@s.whatsapp.net'];
 
         $message = new TextMessage($number, $text, $delay, null, $linkPreview, $mentionsEveryOne, $mentioned);
         $data = $message->toArray();
@@ -56,14 +57,14 @@ class MessageModelTest extends TestCase
         $this->assertEquals($mentioned, $data['mentioned']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_text_message_with_quoted_message()
     {
         $number = '5511999999999';
         $text = 'Reply to message';
 
         $quotedMessageKey = [
-            'remoteJid' => '5511999999999@c.us',
+            'remoteJid' => '5511999999999@s.whatsapp.net',
             'fromMe' => false,
             'id' => '12345',
         ];
@@ -77,7 +78,7 @@ class MessageModelTest extends TestCase
         $this->assertEquals($quotedMessageKey, $data['quoted']['key']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_location_message()
     {
         $number = '5511999999999';
@@ -96,7 +97,7 @@ class MessageModelTest extends TestCase
         $this->assertEquals($longitude, $data['longitude']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_contact_message()
     {
         $number = '5511999999999';
@@ -115,11 +116,11 @@ class MessageModelTest extends TestCase
         $this->assertEquals($phoneNumber, $data['contact'][0]['phoneNumber']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_reaction_message()
     {
         $key = [
-            'remoteJid' => '5511999999999@c.us',
+            'remoteJid' => '5511999999999@s.whatsapp.net',
             'fromMe' => false,
             'id' => '12345',
         ];
@@ -132,7 +133,7 @@ class MessageModelTest extends TestCase
         $this->assertEquals($reaction, $data['reaction']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_poll_message()
     {
         $number = '5511999999999';
@@ -149,7 +150,7 @@ class MessageModelTest extends TestCase
         $this->assertEquals($values, $data['values']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_list_message()
     {
         $number = '5511999999999';
@@ -188,7 +189,7 @@ class MessageModelTest extends TestCase
         $this->assertCount(2, $data['sections'][1]['rows']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_status_message()
     {
         $type = 'text';
@@ -207,7 +208,7 @@ class MessageModelTest extends TestCase
         $this->assertTrue($data['allContacts']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_template_message()
     {
         $number = '5511999999999';
@@ -234,7 +235,7 @@ class MessageModelTest extends TestCase
         $this->assertEquals($components, $data['components']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_template_message_with_webhook_url()
     {
         $number = '5511999999999';

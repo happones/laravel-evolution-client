@@ -6,6 +6,7 @@ namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
 use Happones\LaravelEvolutionClient\Resources\Proxy;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class ProxyResourceTest extends TestCase
@@ -20,7 +21,7 @@ class ProxyResourceTest extends TestCase
      */
     protected $service;
 
-    /** @test */
+    #[Test]
     public function it_can_set_proxy()
     {
         $result = $this->proxyResource->set(
@@ -36,7 +37,7 @@ class ProxyResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_find_proxy_settings()
     {
         $result = $this->proxyResource->find();

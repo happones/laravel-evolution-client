@@ -4,6 +4,7 @@ namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
 use Happones\LaravelEvolutionClient\Resources\EvolutionBot;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -13,7 +14,7 @@ class EvolutionBotResourceTest extends TestCase
 
     protected EvolutionService|MockObject $service;
 
-    /** @test */
+    #[Test]
     public function it_can_create_evolution_bot()
     {
         $payload = $this->getBotDataPayload();
@@ -25,7 +26,7 @@ class EvolutionBotResourceTest extends TestCase
         $this->assertEquals('bot_created_123', $result['bot']['id']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_update_evolution_bot()
     {
         $evolutionBotId = 'bot_to_update_456';
@@ -40,7 +41,7 @@ class EvolutionBotResourceTest extends TestCase
         $this->assertFalse($result['bot']['enabled']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_delete_evolution_bot()
     {
         $evolutionBotId = 'bot_to_delete_789';

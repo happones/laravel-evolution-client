@@ -18,13 +18,13 @@ of truth for architecture and conventions.
   `EvolutionApiException` surface for API errors — never leak `GuzzleException`.
 - Match the surrounding style exactly, including the PHPDoc blocks. English only.
 - No `declare(strict_types=1)` in this codebase — don't add it.
-- PHP 8.3+ / Laravel 13 compatible.
+- PHP 8.3+ / Laravel 11–13 compatible.
 
-## Adding a new Resource — register in THREE places or `instance()` breaks
+## Adding a new Resource — register it in the client and the facade
 
 1. `src/Resources/Foo.php` (mirror an existing Resource).
-2. `src/EvolutionApiClient.php`: `public Foo $foo;`, construct it, and add
-   `$this->foo->setInstanceName($instanceName);` in `instance()`.
+2. `src/EvolutionApiClient.php`: `public Foo $foo;` and construct it in `__construct()`
+   (`instance()` returns a new client, so it needs no change).
 3. `src/Facades/Evolution.php`: add the `@method` line.
 4. Add `tests/Unit/Resources/FooResourceTest.php`.
 

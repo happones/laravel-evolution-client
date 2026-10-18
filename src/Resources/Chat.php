@@ -52,65 +52,71 @@ class Chat
      */
     public function all(): array
     {
-        return $this->service->get("/chat/fetch/{$this->instanceName}");
+        return $this->findChats();
     }
 
     /**
      * Get a specific chat.
      *
+     * @param string $phoneNumber Phone number with country code, or a JID
      *
      * @throws EvolutionApiException
      */
     public function find(string $phoneNumber): array
     {
-        $number = $this->formatPhoneNumber($phoneNumber);
-
-        return $this->service->get("/chat/find/{$this->instanceName}", [
-            'number' => $number,
+        return $this->findChats([
+            'where' => ['remoteJid' => $this->toJid($phoneNumber)],
         ]);
     }
 
     /**
-     * Format phone number to be used with the API.
+     * Format a phone number for the API.
+     *
+     * Evolution API v2 expects the bare number with country code (it builds the
+     * "@s.whatsapp.net" JID itself), so only digits are kept. Values that are
+     * already a JID (e.g. "...@g.us", "...@s.whatsapp.net", "...@lid") are
+     * passed through unchanged.
      */
     protected function formatPhoneNumber(string $phoneNumber): string
     {
-        // Remove any non-digit characters
-        $number = preg_replace('/\D/', '', $phoneNumber);
+        if (str_contains($phoneNumber, '@')) {
+            return $phoneNumber;
+        }
 
-        // Add @ to create a valid recipient id for the API
-        return $number . '@c.us';
+        return (string) preg_replace('/\D/', '', $phoneNumber);
     }
 
     /**
      * Get chat messages.
      *
+     * @param string $phoneNumber Phone number with country code, or a JID
+     * @param int $count Messages per page
+     * @param int $page Page number (1-based)
      *
      * @throws EvolutionApiException
      */
-    public function messages(string $phoneNumber, int $count = 20): array
+    public function messages(string $phoneNumber, int $count = 20, int $page = 1): array
     {
-        $number = $this->formatPhoneNumber($phoneNumber);
-
-        return $this->service->get("/chat/messages/{$this->instanceName}", [
-            'number' => $number,
-            'count' => $count,
+        return $this->findMessages([
+            'where' => ['key' => ['remoteJid' => $this->toJid($phoneNumber)]],
+            'offset' => $count,
+            'page' => $page,
         ]);
     }
 
     /**
-     * Clear all messages in a chat.
+     * Build a full JID from a phone number (JIDs are returned unchanged).
      *
-     *
-     * @throws EvolutionApiException
+     * Needed where Evolution filters by stored "remoteJid" instead of resolving
+     * the number itself (findChats / findMessages).
      */
-    public function clearMessages(string $phoneNumber): array
+    protected function toJid(string $phoneNumber): string
     {
-        $number = $this->formatPhoneNumber($phoneNumber);
+        if (str_contains($phoneNumber, '@')) {
+            return $phoneNumber;
+        }
 
-        return $this->service->post("/chat/clear/{$this->instanceName}", [
-            'number' => $number,
-        ]);
+        return $this->formatPhoneNumber($phoneNumber) . '@s.whatsapp.net';
     }
 
     /**
@@ -160,18 +166,28 @@ class Chat
     }
 
     /**
-     * Delete a chat.
+     * Delete a message for everyone.
      *
+     * @param string $id Message id
+     * @param string $remoteJid Chat remote JID
+     * @param bool $fromMe Whether the message was sent by the instance owner
+     * @param string|null $participant Sender JID, for group messages only
      *
      * @throws EvolutionApiException
      */
-    public function delete(string $phoneNumber): array
+    public function deleteMessageForEveryone(string $id, string $remoteJid, bool $fromMe, ?string $participant = null): array
     {
-        $number = $this->formatPhoneNumber($phoneNumber);
+        $payload = [
+            'id' => $id,
+            'remoteJid' => $remoteJid,
+            'fromMe' => $fromMe,
+        ];
 
-        return $this->service->delete("/chat/delete/{$this->instanceName}", [
-            'number' => $number,
-        ]);
+        if ($participant !== null) {
+            $payload['participant'] = $participant;
+        }
+
+        return $this->service->delete("/chat/deleteMessageForEveryone/{$this->instanceName}", [], $payload);
     }
 
     /**

@@ -24,8 +24,9 @@ EVOLUTION_DEFAULT_INSTANCE=default
 ## Core concept: instances
 
 An *instance* is a WhatsApp connection. The default instance comes from config; switch at
-runtime with `Evolution::instance('name')`, which returns the client so you can chain into
-a resource.
+runtime with `Evolution::instance('name')`, which returns a **new** client bound to that
+instance (the shared singleton is never mutated, so it is safe in queues and Octane). Always
+chain from it or keep the returned client — never call it just for its side effect.
 
 ```php
 use Happones\LaravelEvolutionClient\Facades\Evolution;
@@ -48,6 +49,7 @@ Access each domain as a property on the client (or via the facade's convenience 
 ```php
 Evolution::createInstance('sales');          // provision a new instance
 $qr = Evolution::instance('sales')->getQrCode();   // QR to link WhatsApp
+$code = Evolution::instance('sales')->getPairingCode('5215512345678'); // or link by phone number
 $connected = Evolution::instance('sales')->isConnected();
 Evolution::instance('sales')->disconnect();
 ```
@@ -89,7 +91,10 @@ try {
   need a fresh, non-facade instance.
 - Never assume a method exists — check `src/Resources/*.php` (or the facade `@method`
   PHPDoc in `src/Facades/Evolution.php`) for the real signature.
-- Phone numbers are passed as digits with country code (e.g. `5511999999999`), no `+`.
+- Phone numbers are passed as digits with country code (e.g. `5511999999999`), no `+` and
+  no `@c.us` suffix. Group/JID values containing `@` are passed through unchanged.
 - All resource methods can throw `EvolutionApiException`; wrap network-facing calls.
-- To handle inbound events, configure `webhook_url` in `config/evolution.php` and consume
-  the package's webhook events (see the package README).
+- To handle inbound events, enable `evolution.webhook.route`, set `EVOLUTION_WEBHOOK_SECRET`
+  and send the same value as the `X-Evolution-Secret` header via
+  `->instance->setWebhook(url: ..., headers: [...])`; then listen for
+  `EvolutionWebhookReceived` (see the package README).

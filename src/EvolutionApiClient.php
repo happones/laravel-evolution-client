@@ -129,42 +129,33 @@ class EvolutionApiClient
     }
 
     /**
-     * Set the instance name.
+     * Get a client bound to the given instance.
+     *
+     * Returns a new, isolated client instead of mutating this one, so a
+     * long-lived container singleton (queue workers, Octane) never leaks one
+     * instance's name into another job or request.
      */
     public function instance(string $instanceName): self
     {
-        $this->instanceName = $instanceName;
-
-        // Update instance name in all resources
-        $this->chat->setInstanceName($instanceName);
-        $this->group->setInstanceName($instanceName);
-        $this->message->setInstanceName($instanceName);
-        $this->instance->setInstanceName($instanceName);
-        $this->call->setInstanceName($instanceName);
-        $this->label->setInstanceName($instanceName);
-        $this->profile->setInstanceName($instanceName);
-        $this->websocket->setInstanceName($instanceName);
-        $this->template->setInstanceName($instanceName);
-        $this->proxy->setInstanceName($instanceName);
-        $this->settings->setInstanceName($instanceName);
-        $this->evolutionBot->setInstanceName($instanceName);
-        $this->openAIBot->setInstanceName($instanceName);
-        $this->business->setInstanceName($instanceName);
-
-        return $this;
+        return new self($this->service, $instanceName);
     }
 
     /**
-     * Get the QR code for the instance.
-     *
+     * Get the instance name this client is bound to.
+     */
+    public function getInstanceName(): string
+    {
+        return $this->instanceName;
+    }
+
+    /**
+     * Create a new instance.
      *
      * @throws EvolutionApiException
      */
     public function createInstance(string $name): array
     {
-        $this->instance->setInstanceName($name);
-
-        return $this->instance->createInstance($name);
+        return $this->instance($name)->instance->createInstance($name);
     }
 
     /**
@@ -175,6 +166,18 @@ class EvolutionApiClient
     public function getQrCode(): array
     {
         return $this->instance->getQrCode();
+    }
+
+    /**
+     * Get a pairing code to link the instance by phone number instead of QR.
+     *
+     * @param string $phoneNumber Phone number with country code
+     *
+     * @throws EvolutionApiException
+     */
+    public function getPairingCode(string $phoneNumber): ?string
+    {
+        return $this->instance->getPairingCode($phoneNumber);
     }
 
     /**

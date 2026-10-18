@@ -6,6 +6,7 @@ namespace Happones\LaravelEvolutionClient\Tests\Unit\Resources;
 
 use Happones\LaravelEvolutionClient\Resources\Group;
 use Happones\LaravelEvolutionClient\Services\EvolutionService;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class GroupResourceTest extends TestCase
@@ -20,7 +21,7 @@ class GroupResourceTest extends TestCase
      */
     protected $service;
 
-    /** @test */
+    #[Test]
     public function it_can_get_all_groups()
     {
         $result = $this->groupResource->all();
@@ -30,7 +31,7 @@ class GroupResourceTest extends TestCase
         $this->assertArrayHasKey('groups', $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_find_group()
     {
         $result = $this->groupResource->find('123456789@g.us');
@@ -39,7 +40,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_group()
     {
         $result = $this->groupResource->create('Test Group', [
@@ -51,7 +52,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_update_group_subject()
     {
         $result = $this->groupResource->updateSubject('123456789@g.us', 'New Group Name');
@@ -60,7 +61,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_update_group_description()
     {
         $result = $this->groupResource->updateDescription('123456789@g.us', 'New group description');
@@ -69,7 +70,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_add_participants()
     {
         $result = $this->groupResource->addParticipants('123456789@g.us', [
@@ -80,7 +81,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_remove_participants()
     {
         $result = $this->groupResource->removeParticipants('123456789@g.us', [
@@ -91,7 +92,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_promote_participant_to_admin()
     {
         $result = $this->groupResource->promoteToAdmin('123456789@g.us', '5511999999999');
@@ -100,7 +101,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_demote_participant_from_admin()
     {
         $result = $this->groupResource->demoteFromAdmin('123456789@g.us', '5511999999999');
@@ -109,7 +110,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_participants()
     {
         $result = $this->groupResource->getParticipants('123456789@g.us');
@@ -118,7 +119,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_update_participant()
     {
         $result = $this->groupResource->updateParticipant('123456789@g.us', 'add', ['5511999999999']);
@@ -127,7 +128,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_leave_group()
     {
         $result = $this->groupResource->leave('123456789@g.us');
@@ -136,7 +137,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_invite_code()
     {
         $result = $this->groupResource->getInviteCode('123456789@g.us');
@@ -145,7 +146,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_join_with_invite_code()
     {
         $result = $this->groupResource->joinWithInviteCode('ABC123');
@@ -154,7 +155,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_update_group_picture()
     {
         $result = $this->groupResource->updateGroupPicture('123456789@g.us', 'https://example.com/pic.png');
@@ -163,7 +164,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_revoke_invite_code()
     {
         $result = $this->groupResource->revokeInviteCode('123456789@g.us');
@@ -172,7 +173,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_invite_info()
     {
         $result = $this->groupResource->inviteInfo('ABC123');
@@ -181,7 +182,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_invite()
     {
         $result = $this->groupResource->sendInvite('123456789@g.us', 'Join us', ['5511999999999']);
@@ -190,7 +191,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_toggle_ephemeral()
     {
         $result = $this->groupResource->toggleEphemeral('123456789@g.us', 86400);
@@ -199,7 +200,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_update_setting()
     {
         $result = $this->groupResource->updateSetting('123456789@g.us', 'announcement');
@@ -208,7 +209,7 @@ class GroupResourceTest extends TestCase
         $this->assertEquals('success', $result['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_validates_update_setting_action()
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -230,7 +231,7 @@ class GroupResourceTest extends TestCase
                     'id' => '123456789@g.us',
                     'subject' => 'Test Group',
                     'creation' => 1678901234,
-                    'owner' => '5511999999999@c.us',
+                    'owner' => '5511999999999@s.whatsapp.net',
                     'desc' => 'Group description',
                 ],
             ],

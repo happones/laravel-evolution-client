@@ -6,11 +6,12 @@ use Happones\LaravelEvolutionClient\Events\EvolutionWebhookReceived;
 use Happones\LaravelEvolutionClient\Webhook\WebhookEvent;
 use Happones\LaravelEvolutionClient\Webhook\WebhookProcessor;
 use Illuminate\Events\Dispatcher;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class WebhookProcessorTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_runs_any_and_per_event_callbacks()
     {
         $seen = [];
@@ -33,7 +34,7 @@ class WebhookProcessorTest extends TestCase
         $this->assertSame(['any:messages.upsert', 'specific:XYZ'], $seen);
     }
 
-    /** @test */
+    #[Test]
     public function it_dispatches_laravel_events_when_a_dispatcher_is_present()
     {
         $dispatcher = new Dispatcher;
@@ -56,7 +57,7 @@ class WebhookProcessorTest extends TestCase
         $this->assertInstanceOf(WebhookEvent::class, $event);
     }
 
-    /** @test */
+    #[Test]
     public function it_works_without_a_dispatcher()
     {
         $event = (new WebhookProcessor)->process(['event' => 'call', 'data' => []]);

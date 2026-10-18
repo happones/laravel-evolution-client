@@ -8,17 +8,30 @@ use Happones\LaravelEvolutionClient\EvolutionApiClient;
 use Happones\LaravelEvolutionClient\EvolutionServiceProvider;
 use Happones\LaravelEvolutionClient\Facades\Evolution;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class EvolutionServiceProviderTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_registers_the_service()
     {
         $this->assertTrue($this->app->bound('evolution'));
         $this->assertInstanceOf(EvolutionApiClient::class, $this->app->make('evolution'));
     }
 
-    /** @test */
+    #[Test]
+    public function switching_instances_through_the_facade_does_not_leak_into_the_singleton()
+    {
+        $default = Evolution::getInstanceName();
+
+        $sales = Evolution::instance('sales');
+
+        $this->assertEquals('sales', $sales->message->getInstanceName());
+        $this->assertEquals($default, Evolution::getInstanceName());
+        $this->assertEquals($default, app('evolution')->message->getInstanceName());
+    }
+
+    #[Test]
     public function it_loads_the_config()
     {
         $this->assertEquals('http://localhost:8080', config('evolution.base_url'));
@@ -26,13 +39,13 @@ class EvolutionServiceProviderTest extends TestCase
         $this->assertEquals('test-instance', config('evolution.default_instance'));
     }
 
-    /** @test */
+    #[Test]
     public function the_facade_works()
     {
         $this->assertInstanceOf(EvolutionApiClient::class, app('evolution'));
     }
 
-    /** @test */
+    #[Test]
     public function the_facade_provides_access_to_all_resources()
     {
         $client = app('evolution');
@@ -52,7 +65,7 @@ class EvolutionServiceProviderTest extends TestCase
         $this->assertInstanceOf('Happones\LaravelEvolutionClient\Resources\Business', $client->business);
     }
 
-    /** @test */
+    #[Test]
     public function it_publishes_the_config()
     {
         $this->artisan('vendor:publish', [
