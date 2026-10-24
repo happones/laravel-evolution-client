@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.1] - 2026-10-24
+
+### Fixed
+- **`"error": false` is no longer a failure.** Evolution answers several successes (logout,
+  instance delete, restart) with `"error": false`; the client threw on them because it only
+  checked that the key existed. Only a truthy `error` or `"status": "error"` fails now.
+- **API errors are no longer wrapped as "Unexpected error: …".** An `EvolutionApiException`
+  raised while reading the response (an API error, invalid JSON) now reaches the caller with its
+  own message and code instead of being re-wrapped by the generic `Exception` handler.
+
 ## [4.0.0] - 2026-10-17
 
 ### Added

@@ -104,15 +104,18 @@ class EvolutionService
                 throw new EvolutionApiException('Invalid JSON response from API', 500);
             }
 
-            // Check for API error response
-            if (isset($data['error']) || (isset($data['status']) && $data['status'] === 'error')) {
-                $message = $data['error'] ?? $data['message'] ?? 'Unknown API error';
-                $code = $data['code'] ?? 400;
+            // Check for API error response. Some successes (logout, delete,
+            // restart) answer `"error": false`, which is not a failure.
+            if (! empty($data['error']) || (($data['status'] ?? null) === 'error')) {
+                $message = is_string($data['error'] ?? null) ? $data['error'] : ($data['message'] ?? 'Unknown API error');
+                $code = is_numeric($data['code'] ?? null) ? (int) $data['code'] : 400;
 
-                throw new EvolutionApiException($message, $code);
+                throw new EvolutionApiException(is_string($message) ? $message : 'Unknown API error', $code);
             }
 
-            return $data ?? [];
+            return is_array($data) ? $data : [];
+        } catch (EvolutionApiException $e) {
+            throw $e;
         } catch (GuzzleException $e) {
             $message = $e->getMessage();
             $statusCode = $e->getCode();
